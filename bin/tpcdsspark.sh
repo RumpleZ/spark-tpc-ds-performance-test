@@ -476,20 +476,12 @@ SETUP
  (2) Generate TPC-DS data with 1GB scale
  (3) Create spark tables
  (4) Generate TPC-DS queries
-<<<<<<< HEAD
  (5) Use HBase module
 RUN
  (6) Run a subset of TPC-DS queries
  (7) Run All (99) TPC-DS Queries
 CLEANUP
  (8) Cleanup toolkit
-=======
-RUN
- (5) Run a subset of TPC-DS queries
- (6) Run All (99) TPC-DS Queries
-CLEANUP
- (7) Cleanup toolkit
->>>>>>> 8ea8b6d691e2a1186398727969bb4fbc4bbe03bb
  (Q) Quit
 ----------------------------------------------
 EOF
