@@ -501,16 +501,10 @@ EOF
     "2")  gen_data $TPCDS_ROOT_DIR '1G' ;;
     "3")  create_spark_tables ;;
     "4")  generate_queries ;;
-<<<<<<< HEAD
     "5")  bash $TPCDS_ROOT_DIR/bin/dataPreparation.sh ;;
     "6")  run_subset_tpcds_queries ;;
     "7")  run_tpcds_queries ;;
     "8")  cleanup_toolkit ;;
-=======
-    "5")  run_subset_tpcds_queries ;;
-    "6")  run_tpcds_queries ;;
-    "7")  cleanup_toolkit ;;
->>>>>>> 8ea8b6d691e2a1186398727969bb4fbc4bbe03bb
     "Q")  exit                      ;;
     "q")  exit                      ;;
      * )  echo "invalid option"     ;;
