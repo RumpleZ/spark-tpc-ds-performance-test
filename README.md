@@ -1,4 +1,5 @@
 # TPC-DS_Spark_HBase
-Duplicated from https://github.com/IBM/spark-tpc-ds-performance-test/.
 
-Adapted project to support queries on spark using hbase as sink. Using an external connector by Hortonworks found in https://github.com/hortonworks-spark/shc.
+Duplicated project from: https://github.com/IBM/spark-tpc-ds-performance-test/.
+Benchmark tool adapted to benchmark Apache Spark using HBase as data sink. 
+Hortonworks connector used to abstract some of the work: https://github.com/hortonworks-spark/shc

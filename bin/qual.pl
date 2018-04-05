@@ -207,4 +207,8 @@ sub gen_qualification_queries
     }
     close FH;
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 8ea8b6d691e2a1186398727969bb4fbc4bbe03bb
