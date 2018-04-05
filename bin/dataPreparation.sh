@@ -1,11 +1,7 @@
 #!/bin/bash
 
 
-<<<<<<< HEAD
 TPCDS_ROOT_DIR="/home/cruz/Desktop/TPC-DS_Spark_HBase"
-=======
-TPCDS_ROOT_DIR="/home/cruz/Desktop/spark-tpc-ds-performance-test"
->>>>>>> 8ea8b6d691e2a1186398727969bb4fbc4bbe03bb
 Tables="";
 
 
@@ -25,11 +21,7 @@ function createAux {
 		echo "Processing dataset: "$file_noext
     Tables+=$file_noext" "
 		
-<<<<<<< HEAD
 		python3 bin/scalaLoadCreate.py $filename $delimiter "$fieldNames" $TPCDS_ROOT_DIR
-=======
-		python3 typeFinder.py $filename $delimiter "$fieldNames"
->>>>>>> 8ea8b6d691e2a1186398727969bb4fbc4bbe03bb
 
 		if [ $(echo $filename |cut -d'.' -f2) != "csv" ]
 		then 
@@ -58,17 +50,10 @@ function sbtProject {
 
 function create_scala_hbaseData {
   current_dir=`pwd`
-<<<<<<< HEAD
   mkdir -p $TPCDS_ROOT_DIR/scalaJobs
   mkdir -p $TPCDS_ROOT_DIR/scalaStructs
   mkdir -p $TPCDS_ROOT_DIR/scalaWorlandia
   mkdir -p $TPCDS_ROOT_DIR/validatedData
-=======
-  mkdir -p scalaJobs
-  mkdir -p scalaStructs
-  mkdir -p scalaWorlandia
-  mkdir -p validatedData
->>>>>>> 8ea8b6d691e2a1186398727969bb4fbc4bbe03bb
   sbtProject
   for i in `ls ${TPCDS_ROOT_DIR}/gendata/*.dat`
   do
@@ -78,16 +63,9 @@ function create_scala_hbaseData {
   createAux
   cd $TPCDS_ROOT_DIR/scalaJobs
   echo "Compiling JAR..."
-<<<<<<< HEAD
   sbt package > /dev/null 2>&1
   cd $TPCDS_ROOT_DIR
   #  VER SE E PARA REMOVER ESTA MERDA python3 $TPCDS_ROOT_DIR/bin/prepareTables.py "$Tables"
-=======
- # sbt package > /dev/null 2>&1
-  cd $TPCDS_ROOT_DIR
-  #python3 prepareTables.py "$Tables"
-
->>>>>>> 8ea8b6d691e2a1186398727969bb4fbc4bbe03bb
 }
 
 #######################################################################################################
@@ -98,11 +76,7 @@ function create_scala_hbaseData {
 function create_scala_structs {
   for i in `ls ${TPCDS_ROOT_DIR}/scalaStructs/*.sc`
   do
-<<<<<<< HEAD
     echo "Processing "$i"..."
-=======
-    echo "Processing "$1"..."
->>>>>>> 8ea8b6d691e2a1186398727969bb4fbc4bbe03bb
     sudo /usr/local/spark/bin/spark-shell --master local --jars ~/Desktop/shc/core/target/shc-core-1.1.2-2.2-s_2.11-SNAPSHOT.jar -i $i > /dev/null 2>&1
   done
  
@@ -115,11 +89,7 @@ function sparkJob {
 	cd $SPARK_HOME
   JAR_OPTIONS=" --jars /home/cruz/Desktop/shc/core/target/shc-core-1.1.2-2.2-s_2.11-SNAPSHOT.jar"
   CONFIG_OPTIONS=" --master local "
-<<<<<<< HEAD
   sudo bin/spark-submit $JAR_OPTIONS $CONFIG_OPTIONS --class $1 $TPCDS_ROOT_DIR/scalaJobs/target/scala-2.11/tpcbench_2.11-1.0.jar > /dev/null 2>&1
-=======
-  sudo bin/spark-submit $JAR_OPTIONS $CONFIG_OPTIONS --class $1 $TPCDS_ROOT_DIR/scalaJobs/target/scala-2.11/tpcbench_2.11-1.0.jar #> /dev/null 2>&1
->>>>>>> 8ea8b6d691e2a1186398727969bb4fbc4bbe03bb
   cd $TPCDS_ROOT_DIR
 }
 
@@ -153,19 +123,11 @@ function sbtWork {
 }
 
 function sparkQuery {
-<<<<<<< HEAD
   cd $TPCDS_ROOT_DIR
   JAR_OPTIONS=" --jars /home/cruz/Desktop/shc/core/target/shc-core-1.1.2-2.2-s_2.11-SNAPSHOT.jar"
   CONFIG_OPTIONS=" --master local --driver-memory 4g --executor-memory 2g --num-executors 1 "
 
-  #sudo $SPARK_HOME/bin/spark-submit $JAR_OPTIONS $CONFIG_OPTIONS --class $1 $TPCDS_ROOT_DIR/scalaWorlandia/target/scala-2.11/tpcbenchworkload_2.11-1.0.jar > $1.output
-=======
-  cd $SPARK_HOME
-  JAR_OPTIONS=" --jars /home/cruz/Desktop/shc/core/target/shc-core-1.1.2-2.2-s_2.11-SNAPSHOT.jar"
-  CONFIG_OPTIONS=" --master local "
-  DRIVER_OPTIONS=" --driver-memory 4g --driver-java-options -Dlog4j.configuration=file:///${TPCDS_ROOT_DIR}/work/log4j.properties"
-  sudo bin/spark-submit --class $1 $TPCDS_ROOT_DIR/scalaWorlandia/target/scala-2.11/tpcbenchworkload_2.11-1.0.jar $DRIVER_OPTIONS $JAR_OPTIONS $CONFIG_OPTIONS
->>>>>>> 8ea8b6d691e2a1186398727969bb4fbc4bbe03bb
+  sudo $SPARK_HOME/bin/spark-submit $JAR_OPTIONS $CONFIG_OPTIONS --class $1 $TPCDS_ROOT_DIR/scalaWorlandia/target/scala-2.11/tpcbenchworkload_2.11-1.0.jar > $1.output
  
   # {TPCDS_ROOT_DIR}/bin/runqueries.sh $SPARK_HOME $TPCDS_WORK_DIR  > ${TPCDS_WORK_DIR}/runqueries.out 2>&1 &
 
@@ -175,38 +137,23 @@ function sparkQuery {
 function runQueries {
   sbtWork
   cd $TPCDS_ROOT_DIR
-<<<<<<< HEAD
   rm $TPCDS_ROOT_DIR/scalaWorlandia/src/main/scala/query*
-=======
-  #rm $TPCDS_ROOT_DIR/scalaWorlandia/src/main/scala/query*
->>>>>>> 8ea8b6d691e2a1186398727969bb4fbc4bbe03bb
   
   echo "Select an query interval(ex. 1~1, 10~99)"
   read interval
   array=()
   IFS='~' read -r -a array <<< $interval
-<<<<<<< HEAD
   echo "Generating workload..."
   python3 $TPCDS_ROOT_DIR/bin/generateWorkload.py ${array[0]} ${array[1]} $TPCDS_ROOT_DIR
   cd $TPCDS_ROOT_DIR/scalaWorlandia
   echo "Compiling query workload..."
   sbt package #> /dev/null 2>&1
-=======
-  #python3 generateWorkload.py ${array[0]} ${array[1]}
-  cd $TPCDS_ROOT_DIR/scalaWorlandia
-  #sbt package
->>>>>>> 8ea8b6d691e2a1186398727969bb4fbc4bbe03bb
 
   for filename in `ls ${TPCDS_ROOT_DIR}/scalaWorlandia/src/main/scala/query*`
   do
     name=$(echo $filename|cut -d'.' -f1| cut -d'/' -f10)
     echo $name
-<<<<<<< HEAD
     sparkQuery $name
-=======
-    sparkQuery $1
-    exit
->>>>>>> 8ea8b6d691e2a1186398727969bb4fbc4bbe03bb
   done
 }
 
@@ -215,11 +162,7 @@ function runQueries {
 function clearALL {
   cd $TPCDS_ROOT_DIR
   echo "Deleting generated data... "
-<<<<<<< HEAD
   rm -rf scalaJobs scalaStructs validatedData scalaWorlandia
-=======
-  rm -rf scalaJobs scalaStructs validatedData
->>>>>>> 8ea8b6d691e2a1186398727969bb4fbc4bbe03bb
   echo "Disabling table call_center..."
   echo -e "disable 'call_center'" | hbase -n  > /dev/null 2>&1
   echo "Disabling table catalog_page..."
@@ -329,11 +272,7 @@ TPC-DS On Spark Menu
 SETUP
  (1) Generate scala code and parse data
  (2) Generate data structures
-<<<<<<< HEAD
  (3) Load data into HBase 
-=======
- (3) Load data in HBase 
->>>>>>> 8ea8b6d691e2a1186398727969bb4fbc4bbe03bb
 RUN
  (4) Benchmark HBase with all (99) TPC-DS Queries
 CLEANUP
