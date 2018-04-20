@@ -7,7 +7,7 @@
 # This is a mandatory parameter. Please provide the location of
 # spark installation.
 #######################################################################
-export SPARK_HOME=/usr/local/spark
+export SPARK_HOME=/home/hadoop/spark
 
 #######################################################################
 # Script environment parameters. When they are not set the script

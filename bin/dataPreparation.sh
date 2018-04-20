@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-TPCDS_ROOT_DIR="/home/cruz/Desktop/TPC-DS_Spark_HBase"
+TPCDS_ROOT_DIR="$HOME/TPC-DS_Spark_HBase"
 Tables="";
 
 
@@ -16,7 +16,7 @@ function createAux {
 
 		file_noext=$(echo $filename|cut -d'.' -f1| cut -d'/' -f7) 
 
-		fieldNames=$(cat ${TPCDS_ROOT_DIR}/work/create_tables.sql | pcregrep -Mo "(?<=create table "$file_noext"_text)[\s\S]+?\)" | awk 'length($1) > 3 {print $1}')
+		fieldNames=$(cat ${TPCDS_ROOT_DIR}/work/create_tables.sql | pcregrep -Mo "(create table "$file_noext"_text)[\s\S]+?\)" | awk 'length($1) > 3 {print $1}')
 
 		echo "Processing dataset: "$file_noext
     Tables+=$file_noext" "
@@ -29,6 +29,9 @@ function createAux {
 		fi
   done
   ( IFS=$'\n'; echo "${Tables[*]}" > tables.txt )
+  hdfs dfs -mkdir -p /home/hadoop/TPC-DS_Spark_HBase/validatedData
+  hdfs dfs -copyFromLocal ~/TPC-DS_SPARK-HBase/validatedData/* hdfs://cloud52:9000/home/hadoop/TPC-DS_Spark_HBase/
+
 }
 
 
@@ -38,14 +41,19 @@ function sbtProject {
   mkdir -p lib project target
 
   # GET CONECTOR SHC FROM LOCAL FOLDER
-  cp /home/cruz/Desktop/shc/core/target/shc-core-1.1.2-2.2-s_2.11-SNAPSHOT.jar lib/
+  cp $HOME/shc/core/target/shc-core-1.1.2-2.2-s_2.11-SNAPSHOT.jar lib/
 
   echo 'name := "TPCbench"
+  
   version := "1.0"
+  
   scalaVersion := "2.11.8"
+  
+  libraryDependencies ++= Seq(
+  "org.apache.spark" % "spark-core_2.10" % "2.2.0",
+  "org.apache.spark" % "spark-sql_2.10" % "2.2.0"
+)' > build.sbt
 
-  libraryDependencies += "org.apache.spark" %% "spark-core" % "2.2.0"
-  libraryDependencies += "org.apache.spark" %% "spark-sql" % "2.2.0"' > build.sbt
 }
 
 function create_scala_hbaseData {
@@ -63,7 +71,7 @@ function create_scala_hbaseData {
   createAux
   cd $TPCDS_ROOT_DIR/scalaJobs
   echo "Compiling JAR..."
-  sbt package > /dev/null 2>&1
+  sbt package# > /dev/null 2>&1
   cd $TPCDS_ROOT_DIR
   #  VER SE E PARA REMOVER ESTA MERDA python3 $TPCDS_ROOT_DIR/bin/prepareTables.py "$Tables"
 }
@@ -77,7 +85,7 @@ function create_scala_structs {
   for i in `ls ${TPCDS_ROOT_DIR}/scalaStructs/*.sc`
   do
     echo "Processing "$i"..."
-    sudo /usr/local/spark/bin/spark-shell --master local --jars ~/Desktop/shc/core/target/shc-core-1.1.2-2.2-s_2.11-SNAPSHOT.jar -i $i > /dev/null 2>&1
+    spark-shell --master yarn --jars ~/shc/core/target/shc-core-1.1.2-2.2-s_2.11-SNAPSHOT.jar -i $i #> /dev/null 2>&1
   done
  
 }
@@ -87,9 +95,9 @@ function create_scala_structs {
 ########################################################### 3 #####################################
 function sparkJob {
 	cd $SPARK_HOME
-  JAR_OPTIONS=" --jars /home/cruz/Desktop/shc/core/target/shc-core-1.1.2-2.2-s_2.11-SNAPSHOT.jar"
-  CONFIG_OPTIONS=" --master local "
-  sudo bin/spark-submit $JAR_OPTIONS $CONFIG_OPTIONS --class $1 $TPCDS_ROOT_DIR/scalaJobs/target/scala-2.11/tpcbench_2.11-1.0.jar > /dev/null 2>&1
+  JAR_OPTIONS=" --jars $HOME/shc/core/target/shc-core-1.1.2-2.2-s_2.11-SNAPSHOT.jar"
+  CONFIG_OPTIONS=" --master yarn "
+  spark-submit $JAR_OPTIONS $CONFIG_OPTIONS --class $1 $TPCDS_ROOT_DIR/scalaJobs/target/scala-2.11.8/tpcbench_2.11.8-1.0.jar #> /dev/null 2>&1
   cd $TPCDS_ROOT_DIR
 }
 
@@ -112,7 +120,7 @@ function sbtWork {
   mkdir -p lib project target
 
   # GET CONECTOR SHC FROM LOCAL FOLDER
-  cp /home/cruz/Desktop/shc/core/target/shc-core-1.1.2-2.2-s_2.11-SNAPSHOT.jar lib/
+  cp $HOME/shc/core/target/shc-core-1.1.2-2.2-s_2.11-SNAPSHOT.jar lib/
 
   echo 'name := "TPCbenchWorkload"
   version := "1.0"
@@ -124,10 +132,10 @@ function sbtWork {
 
 function sparkQuery {
   cd $TPCDS_ROOT_DIR
-  JAR_OPTIONS=" --jars /home/cruz/Desktop/shc/core/target/shc-core-1.1.2-2.2-s_2.11-SNAPSHOT.jar"
-  CONFIG_OPTIONS=" --master local --driver-memory 4g --executor-memory 2g --num-executors 1 "
+  JAR_OPTIONS=" --jars $HOME/shc/core/target/shc-core-1.1.2-2.2-s_2.11-SNAPSHOT.jar"
+  CONFIG_OPTIONS=" --master yarn --driver-memory 4g --executor-memory 2g --num-executors 1 "
 
-  sudo $SPARK_HOME/bin/spark-submit $JAR_OPTIONS $CONFIG_OPTIONS --class $1 $TPCDS_ROOT_DIR/scalaWorlandia/target/scala-2.11/tpcbenchworkload_2.11-1.0.jar > $1.output
+  $SPARK_HOME/bin/spark-submit $JAR_OPTIONS $CONFIG_OPTIONS --class $1 $TPCDS_ROOT_DIR/scalaWorlandia/target/scala-2.11.8/tpcbenchworkload_2.11.8-1.0.jar > $1.output
  
   # {TPCDS_ROOT_DIR}/bin/runqueries.sh $SPARK_HOME $TPCDS_WORK_DIR  > ${TPCDS_WORK_DIR}/runqueries.out 2>&1 &
 
