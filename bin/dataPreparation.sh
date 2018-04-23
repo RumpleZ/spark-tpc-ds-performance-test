@@ -16,7 +16,7 @@ function createAux {
 
 		file_noext=$(echo $filename|cut -d'.' -f1| cut -d'/' -f7) 
 
-		fieldNames=$(cat ${TPCDS_ROOT_DIR}/work/create_tables.sql | pcregrep -Mo "(create table "$file_noext"_text)[\s\S]+?\)" | awk 'length($1) > 3 {print $1}')
+		fieldNames=$(cat ${TPCDS_ROOT_DIR}/work/create_tables.sql | pcregrep -Mo "(?<=create table "$file_noext"_text)[\s\S]+?\)" | awk 'length($1) > 3 {print $1}')
 
 		echo "Processing dataset: "$file_noext
     Tables+=$file_noext" "
