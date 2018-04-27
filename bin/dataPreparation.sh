@@ -123,17 +123,21 @@ function sbtWork {
   cp $HOME/shc/core/target/shc-core-1.1.2-2.2-s_2.11-SNAPSHOT.jar lib/
 
   echo 'name := "TPCbenchWorkload"
+
   version := "1.0"
+
   scalaVersion := "2.11.8"
 
-  libraryDependencies += "org.apache.spark" %% "spark-core" % "2.2.0"
-  libraryDependencies += "org.apache.spark" %% "spark-sql" % "2.2.0"' > build.sbt
+  libraryDependencies ++= Seq(
+  "org.apache.spark" % "spark-core_2.10" % "2.2.0",
+  "org.apache.spark" % "spark-sql_2.10" % "2.2.0"
+  )' > build.sbt
 }
 
 function sparkQuery {
   cd $TPCDS_ROOT_DIR
   JAR_OPTIONS=" --jars $HOME/shc/core/target/shc-core-1.1.2-2.2-s_2.11-SNAPSHOT.jar"
-  CONFIG_OPTIONS=" --master yarn --driver-memory 4g --executor-memory 2g --num-executors 1 "
+  CONFIG_OPTIONS=" --master yarn --driver-memory 4g --executor-memory 2g --num-executors 2 "
 
   $SPARK_HOME/bin/spark-submit $JAR_OPTIONS $CONFIG_OPTIONS --class $1 $TPCDS_ROOT_DIR/scalaWorlandia/target/scala-2.11.8/tpcbenchworkload_2.11.8-1.0.jar > $1.output
  

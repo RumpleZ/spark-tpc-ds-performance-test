@@ -1,4 +1,5 @@
-#!/bin/bash 
+SPARK_OPTIONS=`awk '{print "--"$1" "$2}' ~/TPC-DS_Spark_HBase/conf/spark.conf |  sed ':a;N;$!ba;s/\n/ /g'`
+echo $SPARK_OPTION
 
 killtree() {
   local parent=$1 child
@@ -87,10 +88,9 @@ check_createtables() {
   fi
   
   cd $SPARK_HOME
-  DRIVER_OPTIONS="--driver-memory 4g --driver-java-options -Dlog4j.configuration=file:///${output_dir}/log4j.properties"
-  EXECUTOR_OPTIONS="--executor-memory 2g --conf spark.executor.extraJavaOptions=-Dlog4j.configuration=file:///${output_dir}/log4j.properties"
+  EXTRA_OPTIONS=" --driver-java-options -Dlog4j.configuration=file:///${output_dir}/log4j.properties --conf spark.executor.extraJavaOptions=-Dlog4j.configuration=file:///${output_dir}/log4j.properties"
   logInfo "Checking pre-reqs for running TPC-DS queries. May take a few seconds.."
-  bin/spark-sql ${DRIVER_OPTIONS} ${EXECUTOR_OPTIONS} --conf spark.sql.catalogImplementation=hive -f ${TPCDS_WORK_DIR}/row_counts.sql > ${TPCDS_WORK_DIR}/rowcounts.out 2>&1
+  bin/spark-sql ${SPARK_OPTIONS} ${EXTRA_OPTIONS} --conf spark.sql.catalogImplementation=hive -f ${TPCDS_WORK_DIR}/row_counts.sql > ${TPCDS_WORK_DIR}/rowcounts.out 2>&1
   cat ${TPCDS_WORK_DIR}/rowcounts.out | grep -v "Time" | grep -v "SLF4J" >> ${TPCDS_WORK_DIR}/rowcounts.rrn
   file1=${TPCDS_WORK_DIR}/rowcounts.rrn
   file2=${TPCDS_ROOT_DIR}/src/ddl/rowcounts.expected
@@ -417,13 +417,12 @@ function create_spark_tables {
   if [ "$result" -ne 1 ]; then 
     current_dir=`pwd`
     cd $SPARK_HOME
-    DRIVER_OPTIONS="--driver-java-options -Dlog4j.configuration=file:///${output_dir}/log4j.properties"
-    EXECUTOR_OPTIONS="--conf spark.executor.extraJavaOptions=-Dlog4j.configuration=file:///${output_dir}/log4j.properties"
+    EXTRA_OPTIONS="--driver-java-options -Dlog4j.configuration=file:///${output_dir}/log4j.properties --conf spark.executor.extraJavaOptions=-Dlog4j.configuration=file:///${output_dir}/log4j.properties"
     logInfo "Creating tables. Will take a few minutes ..."
     ProgressBar 2 122
-    bin/spark-sql --master yarn ${DRIVER_OPTIONS} ${EXECUTOR_OPTIONS} --conf spark.sql.catalogImplementation=hive -f ${TPCDS_WORK_DIR}/create_database.sql > ${TPCDS_WORK_DIR}/create_database.out 2>&1
+    bin/spark-sql ${SPARK_OPTIONS} ${EXTRA_OPTIONS} --conf spark.sql.catalogImplementation=hive -f ${TPCDS_WORK_DIR}/create_database.sql > ${TPCDS_WORK_DIR}/create_database.out 2>&1
     script_pid=$!
-    bin/spark-sql --master yarn ${DRIVER_OPTIONS} ${EXECUTOR_OPTIONS} --conf spark.sql.catalogImplementation=hive -f ${TPCDS_WORK_DIR}/create_tables.sql > ${TPCDS_WORK_DIR}/create_tables.out 2>&1 &
+    bin/spark-sql ${SPARK_OPTIONS} ${EXTRA_OPTIONS} --conf spark.sql.catalogImplementation=hive -f ${TPCDS_WORK_DIR}/create_tables.sql > ${TPCDS_WORK_DIR}/create_tables.out 2>&1 &
     script_pid=$!
     cont=1
     error_code=0
@@ -504,3 +503,4 @@ EOF
     echo "Press any key to continue"
     read -n1 -s
 done
+
