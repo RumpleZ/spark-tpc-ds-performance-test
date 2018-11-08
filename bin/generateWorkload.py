@@ -30,7 +30,7 @@ def loadCatalog(start, end, tables, rootDir):
 		aux += main(str(x).zfill(2))
 		with open("scalaWorlandia/src/main/scala/query" + str(x).zfill(2) + ".scala", "w") as wrkld:
 			for table in tables:
-				aux += "val source_" + table + " = scala.io.Source.fromFile(\""+rootDir+"/scalaStructs/"+table+".json\")\n"
+				aux += "val source_" + table + " = scala.io.Source.fromFile(\""+rootDir+"/scalaJobs/src/main/scala/"+table+".json\")\n"
 				aux += "val "+table+" = try source_"+table+".mkString finally source_"+table+".close()\n"
 				aux += "withCatalog("+table+").createOrReplaceTempView(\"" + table + "\")\n"
 			aux += "val query = scala.io.Source.fromFile(\""+rootDir+"/genqueries/query"+str(x).zfill(2)+".sql\")\n"

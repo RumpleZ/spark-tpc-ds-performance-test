@@ -48,7 +48,7 @@ function refactorData {
 		# The script bellow creates a scala file for each table on the scalaStructs folder. Each scala file will generate JSON file with the table structure.
 		python3 bin/hybrid.py $filename $delimiter "$fieldNames" $TPCDS_ROOT_DIR
 	
-		mv $filename validatedData/"$(basename $filename .dat)".csv
+#		mv $filename validatedData/"$(basename $filename .dat)".csv
          done
   
 	( IFS=$'\n'; echo "${Tables[*]}" > tables.txt )
@@ -87,7 +87,7 @@ function create_scala_hbaseData {
   mkdir -p $TPCDS_ROOT_DIR/scalaWorlandia
   mkdir -p $TPCDS_ROOT_DIR/validatedData
   sbtProject
-  refactorData
+  #refactorData
   cd $TPCDS_ROOT_DIR/scalaJobs
   echo "Compiling JAR..."
   sbt -sbt-version 0.13.8 -J-Xss512m package
@@ -96,10 +96,10 @@ function create_scala_hbaseData {
 
 
 
-########################################################### 3 #####################################
+########################################################### 2 #####################################
 function sparkJob {
-  JAR_OPTIONS=" --packages org.apache.hbase:hbase-common:1.2.6,org.apache.hbase:hbase-client:1.2.6,org.apache.hbase:hbase-protocol:1.2.6,org.apache.hbase:hbase-server:1.2.6 --jars "$HOME"/shc/core/target/shc-core-1.1.2-2.2-s_2.11-SNAPSHOT.jar"
-  CONFIG_OPTIONS=" --master yarn "
+  JAR_OPTIONS=" --packages org.apache.hbase:hbase-common:1.2.6,org.apache.hbase:hbase-client:1.2.6,org.apache.hbase:hbase-protocol:1.2.6,org.apache.hbase:hbase-server:1.2.6 --jars "$HOME"/shc/core/target/shc-core-1.1.2-2.2-s_2.11-SNAPSHOT.jar"",$(echo /home/gsd/shc/target/dependency/*.jar | tr ' ' ',') --driver-class-path /home/gsd/shc/core/target/shc-core-1.1.2-2.2-s_2.11-SNAPSHOT.jar,$(echo /home/gsd/shc/target/dependency/*.jar | tr ' ' ',') --files /home/gsd/shc/core/src/main/resources/schema.xml,/home/gsd/SafeNoSQL/safeclient/src/main/resources/key.txt,hbase-site.xml --conf spark.executor.extraClassPath=/home/gsd/shc/core/target/shc-core-1.1.2-2.2-s_2.11-SNAPSHOT.jar,$(echo /home/gsd/shc/target/dependency/*.jar | tr ' ' ',')"
+  CONFIG_OPTIONS=" --master local "
   spark-submit $JAR_OPTIONS $CONFIG_OPTIONS --class $1 $TPCDS_ROOT_DIR/scalaJobs/target/scala-2.11/tpcbench_2.11-1.0.jar #> /dev/null 2>&1
   cd $TPCDS_ROOT_DIR
 }
@@ -119,7 +119,7 @@ function load_data_hbase {
 
 
 
-############################################################# 4 #######################################
+############################################################# 3 #######################################
 function sbtWork {
   cd $TPCDS_ROOT_DIR/scalaWorlandia
   mkdir -p src/{main,test}/{java,resources,scala}
@@ -142,7 +142,8 @@ function sbtWork {
 
 function sparkQuery {
   cd $TPCDS_ROOT_DIR
-  JAR_OPTIONS=" --packages org.apache.hbase:hbase-common:1.2.6,org.apache.hbase:hbase-client:1.2.6,org.apache.hbase:hbase-protocol:1.2.6,org.apache.hbase:hbase-server:1.2.6 --jars "$HOME"/shc/core/target/shc-core-1.1.2-2.2-s_2.11-SNAPSHOT.jar"
+  JAR_OPTIONS=" --packages org.apache.hbase:hbase-common:1.2.6,org.apache.hbase:hbase-client:1.2.6,org.apache.hbase:hbase-protocol:1.2.6,org.apache.hbase:hbase-server:1.2.6 --jars "$HOME"/shc/core/target/shc-core-1.1.2-2.2-s_2.11-SNAPSHOT.jar"",$(echo /home/gsd/shc/target/dependency/*.jar | tr ' ' ',') --driver-class-path /home/gsd/shc/core/target/shc-core-1.1.2-2.2-s_2.11-SNAPSHOT.jar,$(echo /home/gsd/shc/target/dependency/*.jar | tr ' ' ',') --files /home/gsd/shc/core/src/main/resources/schema.xml,/home/gsd/SafeNoSQL/safeclient/src/main/resources/key.txt,hbase-site.xml --conf spark.executor.extraClassPath=/home/gsd/shc/core/target/shc-core-1.1.2-2.2-s_2.11-SNAPSHOT.jar,$(echo /home/gsd/shc/target/dependency/*.jar | tr ' ' ',')"
+ 
   CONFIG_OPTIONS=" --master yarn "
 
   spark-submit $CONFIG_OPTIONS $JAR_OPTIONS --class $1 $TPCDS_ROOT_DIR/scalaWorlandia/target/scala-2.11/tpcbenchworkload_2.11-1.0.jar > $1.output
@@ -165,11 +166,11 @@ function runQueries {
   python3 $TPCDS_ROOT_DIR/bin/generateWorkload.py ${array[0]} ${array[1]} $TPCDS_ROOT_DIR
   cd $TPCDS_ROOT_DIR/scalaWorlandia
   echo "Compiling query workload..."
-#  sbt package #> /dev/null 2>&1
+  sbt -sbt-version 0.13.8 package #> /dev/null 2>&1
 
   for filename in `ls ${TPCDS_ROOT_DIR}/scalaWorlandia/src/main/scala/query*`
   do
-    name=$(echo $filename|cut -d'.' -f1| cut -d'/' -f10)
+    name=$(basename $filename .scala)
     echo $name
     sparkQuery $name
   done
@@ -289,12 +290,11 @@ TPC-DS On Spark Menu
 ----------------------------------------------
 SETUP
  (1) Generate scala code and parse data
- (2) Generate data structures
- (3) Load data into HBase 
+ (2) Load data into HBase 
 RUN
- (4) Benchmark HBase with all (99) TPC-DS Queries
+ (3) Benchmark HBase with all (99) TPC-DS Queries
 CLEANUP
- (5) Cleanup generated code and delete data from HBase
+ (4) Cleanup generated code and delete data from HBase
  (Q) Quit
 ----------------------------------------------
 EOF
@@ -303,10 +303,9 @@ EOF
     printf "%s\n\n" "----------------------------------------------"
     case "$option" in
     "1")  create_scala_hbaseData ;;
-    "2")  create_scala_structs ;;
-    "3")  load_data_hbase ;;
-    "4")  runQueries ;;
-    "5")  clearALL ;;
+    "2")  load_data_hbase ;;
+    "3")  runQueries ;;
+    "4")  clearALL ;;
     "Q")  exit                      ;;
     "q")  exit                      ;;
      * )  echo "invalid option"     ;;
