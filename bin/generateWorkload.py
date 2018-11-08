@@ -20,7 +20,7 @@ def createTables():
 	return aux 
 
 def main(queryNUM):
-	return "object query"+queryNUM+"{\nval spark = SparkSession.builder.master(\"local\").appName(\"sparkHBase\").getOrCreate()\nval sqlContext = spark.sqlContext\n"+createTables()+"def main(args: Array[String]): Unit = {\n"
+	return "object query"+queryNUM+"{\nval spark = SparkSession.builder.master(\"yarn\").appName(\"sparkHBase\").getOrCreate()\nval sqlContext = spark.sqlContext\n"+createTables()+"def main(args: Array[String]): Unit = {\n"
 
 
 

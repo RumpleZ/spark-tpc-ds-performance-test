@@ -2,36 +2,60 @@
 
 
 TPCDS_ROOT_DIR="$HOME/TPC-DS_Spark_HBase"
+TPCDS_WORK_DIR=$TPCDS_ROOT_DIR"/work"
 Tables="";
+output_dir=$TPCDS_WORK_DIR
+HOSTNAME="cloud64"
+
+# function from tpcsspark
+template(){
+    # usage: template file.tpl
+    while read -r line ; do
+            line=${line//\"/\\\"}
+            line=${line//\`/\\\`}
+            line=${line//\$/\\\$}
+            line=${line//\\\${/\${}
+            eval "echo \"$line\"";
+    done < ${1}
+}
+
+for i in `ls ${TPCDS_ROOT_DIR}/src/ddl/*.sql`
+do
+  baseName="$(basename $i)"
+  template $i > ${output_dir}/$baseName
+done 
 
 
-#####################################################  1  #############################################
-function createAux {
-  cd $TPCDS_ROOT_DIR
-	# Creates scala code and parses csv data
+#######################    1    ##########################
+function refactorData {
+	cd $TPCDS_ROOT_DIR
+	
+	rsync -a $TPCDS_ROOT_DIR/gendata/ $TPCDS_ROOT_DIR/validatedData/ --exclude={dbgen_version.dat,.gitkeep}
+	
 	delimiter="|"
 	for filename in `ls ${TPCDS_ROOT_DIR}/validatedData/*.dat`
   	do
+		## The command bellow adds a collumn with a counter that serves as row key
 		awk -F'|' 'BEGIN{i=0}{print i"|"$0;i++}' $filename > "tmp.tmp" && mv "tmp.tmp" $filename
 
-		file_noext=$(echo $filename|cut -d'.' -f1| cut -d'/' -f7) 
+		file_noext=$(basename $filename .dat)
 
-		fieldNames=$(cat ${TPCDS_ROOT_DIR}/work/create_tables.sql | pcregrep -Mo "(?<=create table "$file_noext"_text)[\s\S]+?\)" | awk 'length($1) > 3 {print $1}')
+		fieldNames=$(cat ${TPCDS_ROOT_DIR}/work/create_tables.sql | pcregrep -Mo "(?<=create table "$file_noext")[\s\S]+?\)" | awk 'length($1) > 3 {print $1}')
 
 		echo "Processing dataset: "$file_noext
-    Tables+=$file_noext" "
+   		Tables+=$file_noext" "
 		
-		python3 bin/scalaLoadCreate.py $filename $delimiter "$fieldNames" $TPCDS_ROOT_DIR
+		# The script bellow creates a scala file for each table on the scalaStructs folder. Each scala file will generate JSON file with the table structure.
+		python3 bin/hybrid.py $filename $delimiter "$fieldNames" $TPCDS_ROOT_DIR
+	
+		mv $filename validatedData/"$(basename $filename .dat)".csv
+         done
+  
+	( IFS=$'\n'; echo "${Tables[*]}" > tables.txt )
 
-		if [ $(echo $filename |cut -d'.' -f2) != "csv" ]
-		then 
-			mv $filename $(echo $filename |cut -d'.' -f1).csv
-		fi
-  done
-  ( IFS=$'\n'; echo "${Tables[*]}" > tables.txt )
-  hdfs dfs -mkdir -p /home/hadoop/TPC-DS_Spark_HBase/validatedData
-  hdfs dfs -copyFromLocal ~/TPC-DS_SPARK-HBase/validatedData/* hdfs://cloud52:9000/home/hadoop/TPC-DS_Spark_HBase/
-
+	# Uploading data to HDFS
+  	hdfs dfs -mkdir -p $HOME/validatedData
+  	hdfs dfs -copyFromLocal $TPCDS_ROOT_DIR/validatedData/* hdfs://$HOSTNAME:9000$HOME/validatedData
 }
 
 
@@ -40,7 +64,7 @@ function sbtProject {
   mkdir -p src/{main,test}/{java,resources,scala}
   mkdir -p lib project target
 
-  # GET CONECTOR SHC FROM LOCAL FOLDER
+  # TODO: DESMARTELAR GET CONECTOR SHC FROM LOCAL FOLDER
   cp $HOME/shc/core/target/shc-core-1.1.2-2.2-s_2.11-SNAPSHOT.jar lib/
 
   echo 'name := "TPCbench"
@@ -56,62 +80,44 @@ function sbtProject {
 
 }
 
+# Refactor TPCDS data and create JSON files with the data structure
 function create_scala_hbaseData {
   current_dir=`pwd`
   mkdir -p $TPCDS_ROOT_DIR/scalaJobs
-  mkdir -p $TPCDS_ROOT_DIR/scalaStructs
   mkdir -p $TPCDS_ROOT_DIR/scalaWorlandia
   mkdir -p $TPCDS_ROOT_DIR/validatedData
   sbtProject
-  for i in `ls ${TPCDS_ROOT_DIR}/gendata/*.dat`
-  do
-    cp $i $TPCDS_ROOT_DIR"/validatedData/"
-  done
-  rm $TPCDS_ROOT_DIR"/validatedData/dbgen_version.dat"
-  createAux
+  refactorData
   cd $TPCDS_ROOT_DIR/scalaJobs
   echo "Compiling JAR..."
-  sbt package# > /dev/null 2>&1
-  cd $TPCDS_ROOT_DIR
-  #  VER SE E PARA REMOVER ESTA MERDA python3 $TPCDS_ROOT_DIR/bin/prepareTables.py "$Tables"
-}
-
-#######################################################################################################
-
-
-
-########################################################### 2 ###############################
-function create_scala_structs {
-  for i in `ls ${TPCDS_ROOT_DIR}/scalaStructs/*.sc`
-  do
-    echo "Processing "$i"..."
-    spark-shell --master yarn --jars ~/shc/core/target/shc-core-1.1.2-2.2-s_2.11-SNAPSHOT.jar -i $i #> /dev/null 2>&1
-  done
+  sbt -sbt-version 0.13.8 -J-Xss512m package
  
 }
 
-############################################################################################
+
 
 ########################################################### 3 #####################################
 function sparkJob {
-	cd $SPARK_HOME
-  JAR_OPTIONS=" --jars $HOME/shc/core/target/shc-core-1.1.2-2.2-s_2.11-SNAPSHOT.jar"
+  JAR_OPTIONS=" --packages org.apache.hbase:hbase-common:1.2.6,org.apache.hbase:hbase-client:1.2.6,org.apache.hbase:hbase-protocol:1.2.6,org.apache.hbase:hbase-server:1.2.6 --jars "$HOME"/shc/core/target/shc-core-1.1.2-2.2-s_2.11-SNAPSHOT.jar"
   CONFIG_OPTIONS=" --master yarn "
-  spark-submit $JAR_OPTIONS $CONFIG_OPTIONS --class $1 $TPCDS_ROOT_DIR/scalaJobs/target/scala-2.11.8/tpcbench_2.11.8-1.0.jar #> /dev/null 2>&1
+  spark-submit $JAR_OPTIONS $CONFIG_OPTIONS --class $1 $TPCDS_ROOT_DIR/scalaJobs/target/scala-2.11/tpcbench_2.11-1.0.jar #> /dev/null 2>&1
   cd $TPCDS_ROOT_DIR
 }
 
 
 
 function load_data_hbase {
+  cd $TPCDS_ROOT_DIR
+
   for i in `ls ${TPCDS_ROOT_DIR}/gendata/*.dat`
     do
-      file_noext=$(echo $i|cut -d'.' -f1| cut -d'/' -f7) 
-      echo "Processing job: "$file_noext "..."
-      sparkJob $file_noext
+   	file_noext=$(basename $i .dat)
+	echo "Processing job: "$file_noext "..."
+      	sparkJob $file_noext
   done
 }
-#######################################################################################################
+
+
 
 ############################################################# 4 #######################################
 function sbtWork {
@@ -136,10 +142,10 @@ function sbtWork {
 
 function sparkQuery {
   cd $TPCDS_ROOT_DIR
-  JAR_OPTIONS=" --jars $HOME/shc/core/target/shc-core-1.1.2-2.2-s_2.11-SNAPSHOT.jar"
-  CONFIG_OPTIONS=" --master yarn --driver-memory 4g --executor-memory 2g --num-executors 2 "
+  JAR_OPTIONS=" --packages org.apache.hbase:hbase-common:1.2.6,org.apache.hbase:hbase-client:1.2.6,org.apache.hbase:hbase-protocol:1.2.6,org.apache.hbase:hbase-server:1.2.6 --jars "$HOME"/shc/core/target/shc-core-1.1.2-2.2-s_2.11-SNAPSHOT.jar"
+  CONFIG_OPTIONS=" --master yarn "
 
-  $SPARK_HOME/bin/spark-submit $JAR_OPTIONS $CONFIG_OPTIONS --class $1 $TPCDS_ROOT_DIR/scalaWorlandia/target/scala-2.11.8/tpcbenchworkload_2.11.8-1.0.jar > $1.output
+  spark-submit $CONFIG_OPTIONS $JAR_OPTIONS --class $1 $TPCDS_ROOT_DIR/scalaWorlandia/target/scala-2.11/tpcbenchworkload_2.11-1.0.jar > $1.output
  
   # {TPCDS_ROOT_DIR}/bin/runqueries.sh $SPARK_HOME $TPCDS_WORK_DIR  > ${TPCDS_WORK_DIR}/runqueries.out 2>&1 &
 
@@ -159,7 +165,7 @@ function runQueries {
   python3 $TPCDS_ROOT_DIR/bin/generateWorkload.py ${array[0]} ${array[1]} $TPCDS_ROOT_DIR
   cd $TPCDS_ROOT_DIR/scalaWorlandia
   echo "Compiling query workload..."
-  sbt package #> /dev/null 2>&1
+#  sbt package #> /dev/null 2>&1
 
   for filename in `ls ${TPCDS_ROOT_DIR}/scalaWorlandia/src/main/scala/query*`
   do
