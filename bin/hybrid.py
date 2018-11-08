@@ -34,7 +34,7 @@ def getCSV(filename):
 
 def imports():
     scala_SHC_catalog = "import org.apache.spark.sql.{DataFrame, SparkSession}\n"
-    scala_SHC_catalog += "import java.io._\n"
+    scala_SHC_catalog += "import java.io._\nimport org.apache.spark.sql.execution.datasources.hbase._\n"
     scala_SHC_catalog += "import org.apache.spark.sql.types.{StructType, StructField, StringType, IntegerType}\n\n"
     return scala_SHC_catalog
 
@@ -47,7 +47,7 @@ def body(DBName, delimiter, colNames):
     scala_SHC_catalog += "val sqlContext = spark.sqlContext\n"
 
     scala_SHC_catalog += "val df = spark.read.format(\"csv\").option(\"header\", \"true\").option(\"delimiter\", " + "\"" + delimiter + "\")." + \
-                         "option(\"inferSchema\",\"true\").load(\"" + "hdfs://cloud64:9000/home/gsd/validatedData/" +  DBName[DBName.rfind(
+                         "option(\"inferSchema\",\"true\").load(\"" + "hdfs://cloud52:9000/home/gsd/validatedData/" +  DBName[DBName.rfind(
         "/") + 1:] + ".csv" + "\")\n\n"
 
     scala_SHC_catalog += "val dfTypes = scala.collection.mutable.Map[String, String]()\n"
@@ -87,6 +87,15 @@ def typeMainDeriver(DBName, delimiter, colNames, rootdir):
         "/") + 1:] + ".json" + "\" ))\n"
     scc += "pw.write(" + DBName[DBName.rfind("/") + 1:] + ")\n"
     scc += "pw.close\n"
+
+    scc += "def withCatalog(cat: String): DataFrame = {\n"
+    scc += "sqlContext.read\n"
+    scc += ".options(Map(org.apache.spark.sql.execution.datasources.hbase.HBaseTableCatalog.tableCatalog->cat))\n"
+    scc += ".format(\"org.apache.spark.sql.execution.datasources.hbase\").load()}\n"
+
+    scc += "df.write.options(Map(HBaseTableCatalog.tableCatalog->"+  DBName[DBName.rfind("/") + 1:] + ",HBaseTableCatalog.newTable->\"5\")).format(\"org.apache.spark.sql.execution.datasources.hbase\").save()\n"
+
+
 
     with open(rootdir + "/scalaJobs/src/main/scala/" + DBName[DBName.rfind("/") + 1:] + ".scala", 'w+') as file:
         file.write(aux + scc + "\nSystem.exit(0)\n}\n}")

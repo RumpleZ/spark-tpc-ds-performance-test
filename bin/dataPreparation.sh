@@ -5,7 +5,7 @@ TPCDS_ROOT_DIR="$HOME/TPC-DS_Spark_HBase"
 TPCDS_WORK_DIR=$TPCDS_ROOT_DIR"/work"
 Tables="";
 output_dir=$TPCDS_WORK_DIR
-HOSTNAME="cloud64"
+HOSTNAME="cloud52"
 
 # function from tpcsspark
 template(){
@@ -48,7 +48,7 @@ function refactorData {
 		# The script bellow creates a scala file for each table on the scalaStructs folder. Each scala file will generate JSON file with the table structure.
 		python3 bin/hybrid.py $filename $delimiter "$fieldNames" $TPCDS_ROOT_DIR
 	
-#		mv $filename validatedData/"$(basename $filename .dat)".csv
+		mv $filename validatedData/"$(basename $filename .dat)".csv
          done
   
 	( IFS=$'\n'; echo "${Tables[*]}" > tables.txt )
@@ -87,7 +87,7 @@ function create_scala_hbaseData {
   mkdir -p $TPCDS_ROOT_DIR/scalaWorlandia
   mkdir -p $TPCDS_ROOT_DIR/validatedData
   sbtProject
-  #refactorData
+  refactorData
   cd $TPCDS_ROOT_DIR/scalaJobs
   echo "Compiling JAR..."
   sbt -sbt-version 0.13.8 -J-Xss512m package
