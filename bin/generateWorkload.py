@@ -35,7 +35,7 @@ def loadCatalog(start, end, tables, rootDir):
 				aux += "withCatalog("+table+").createOrReplaceTempView(\"" + table + "\")\n"
 			aux += "val query = scala.io.Source.fromFile(\""+rootDir+"/genqueries/query"+str(x).zfill(2)+".sql\")\n"
 			aux += "val querySTR = try query.mkString finally query.close()\n"
-			aux += "spark.time(sqlContext.sql(querySTR.patch(querySTR.lastIndexOf(';'), \"\", 1)).collect.foreach(println))\n}\n}\n"
+			aux += "querySTR.patch(querySTR.lastIndexOf(';'), \"\", 1).split(';').foreach(query => spark.time(sqlContext.sql(query).show))\n}\n}\n"
 			wrkld.write(aux)
 		aux = imports()
 

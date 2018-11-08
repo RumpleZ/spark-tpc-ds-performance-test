@@ -61,7 +61,7 @@ check_compile() {
 }
 
 check_gendata() {
- num_datafiles=`find $TPCDS_GENDATA_DIR -name *.dat | wc -l`
+ num_datafiles=`find $TPCDS_GENDATA_DIR -name *.csv | wc -l`
  if [ "$num_datafiles" -lt 24 ]; then 
   logError "TPC-DS data files have not been generated. Please complete option 2"
   echo     "before continuing with the currently selected option."
@@ -270,33 +270,17 @@ function gen_data {
       echo ""
       logInfo "TPCDS data is generated successfully at ${TPCDS_GENDATA_DIR}"
     fi
+
+    logInfo "Uploading data to HDFS. Will take a few minutes ..."
+    cd ${TPCDS_GENDATA_DIR}
+    rename -f 's/.dat$/.csv/' *.dat
     cd $1
+    hdfs dfs -mkdir ${TPCDS_GENDATA_DIR}
+    hdfs dfs -copyFromLocal ${TPCDS_GENDATA_DIR}/* ${TPCDS_GENDATA_DIR}/
   fi
 }
 
 
-
-
-function sbtProject {
-  mkdir -p $1
-  cd $TPCDS_ROOT_DIR/$1
-  mkdir -p src/{main,test}/{java,resources,scala}
-  mkdir -p lib project target
-
-  echo 'name := "ScalaQueries"
-  
-  version := "1.0"
-  
-  scalaVersion := "2.11.8"
-  
-  libraryDependencies ++= Seq(
-  "org.apache.spark" % "spark-core_2.10" % "2.2.0",
-  "org.apache.spark" % "spark-sql_2.10" % "2.2.0"
-)' > build.sbt
-
-  cd $TPCDS_ROOT_DIR
-
-}
 
 
 function generate_queries {
@@ -312,22 +296,15 @@ function generate_queries {
     perl ${TPCDS_ROOT_DIR}/bin/qual.pl
     logInfo "Completed generating TPC-DS qualification queries."
     cd $TPCDS_ROOT_DIR
-    
-    ##########  EM OBRAS  ############
-
-#    sbtProject genScalaQueries
-#    val query = scala.io.Source.fromFile("/home/gsd/TPC-DS_Spark_HBase/genqueries/query01.sql")
-#val querySTR = try query.mkString finally query.close()
-#spark.time(sqlContext.sql(querySTR.patch(querySTR.lastIndexOf(';'), "", 1)).collect.foreach(println))
-    ##################################
   fi
 }
 
 function run_tpcds_common {
   output_dir=$TPCDS_WORK_DIR
   cp ${TPCDS_GENQUERIES_DIR}/*.sql $TPCDS_WORK_DIR
-
+  echo "ENTREI NO RUN"
   ${TPCDS_ROOT_DIR}/bin/runqueries.sh $SPARK_HOME $TPCDS_WORK_DIR  > ${TPCDS_WORK_DIR}/runqueries.out 2>&1 &
+  echo "SAI DO RUN"
   script_pid=$!
   trap 'handle_shutdown $$ $output_dir; exit' SIGHUP SIGQUIT SIGINT SIGTERM
   cont=1
@@ -339,6 +316,7 @@ function run_tpcds_common {
     ps -p $script_pid > /dev/null 
     if [ $? == 1 ]; then
        error_code=1
+       echo "error code > 0"
     fi
     if [ "$error_code" -gt 0 ] || [ "$progress" -ge $NUM_QUERIES ] ; then 
       cont=-1
@@ -451,10 +429,10 @@ function create_spark_tables {
     EXTRA_OPTIONS="--driver-java-options -Dlog4j.configuration=file:///${output_dir}/log4j.properties --conf spark.executor.extraJavaOptions=-Dlog4j.configuration=file:///${output_dir}/log4j.properties"
     logInfo "Creating tables. Will take a few minutes ..."
     ProgressBar 2 122
-    #TODO: migrate to submit
-  bin/spark-sql --master yarn  ${EXTRA_OPTIONS} --conf spark.sql.catalogImplementation=hive  --conf spark.sql.warehouse.dir=/home/gsd -f ${TPCDS_WORK_DIR}/create_database.sql > ${TPCDS_WORK_DIR}/create_database.out 2>&1
+    
+    bin/spark-sql --master yarn  ${EXTRA_OPTIONS} --conf spark.sql.catalogImplementation=hive -f ${TPCDS_WORK_DIR}/create_database.sql > ${TPCDS_WORK_DIR}/create_database.out 2>&1
     script_pid=$!
-    bin/spark-sql --master yarn ${EXTRA_OPTIONS} --conf spark.sql.catalogImplementation=hive  --conf spark.sql.warehouse.dir=/home/gsd -f ${TPCDS_WORK_DIR}/create_tables.sql > ${TPCDS_WORK_DIR}/create_tables.out &
+    bin/spark-sql --master yarn ${EXTRA_OPTIONS} --conf spark.sql.catalogImplementation=hive  -f ${TPCDS_WORK_DIR}/create_tables.sql > ${TPCDS_WORK_DIR}/create_tables.out &
     script_pid=$!
     cont=1
     error_code=0
@@ -520,7 +498,7 @@ EOF
     printf "%s\n\n" "----------------------------------------------"
     case "$option" in
     "1")  download_and_build ;;
-    "2")  gen_data $TPCDS_ROOT_DIR '10G' ;;
+    "2")  gen_data $TPCDS_ROOT_DIR '1G' ;;
     "3")  create_spark_tables ;;
     "4")  generate_queries ;;
     "5")  bash $TPCDS_ROOT_DIR/bin/dataPreparation.sh ;;

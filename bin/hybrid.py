@@ -1,6 +1,8 @@
 import csv
 import sys
 from collections import defaultdict
+from shutil import copy
+import tempfile
 
 all_columns = []
 dict_cols = defaultdict(list)
@@ -8,14 +10,21 @@ dict_cols = defaultdict(list)
 
 def addCSVHeader(filename, colNames):
     result = "key"
+    for col in colNames.split("\n"):
+        result += "|" + col
+    
     with open(filename, 'r+') as csvfile:
         content = csvfile.read()
         csvfile.seek(0)
-        for col in colNames.split("\n"):
-            result += "|" + col
         csvfile.write(result + "\n")
         csvfile.write(content)
-
+#    with tempfile.NamedTemporaryFile() as temp:
+ #       copy(filename, temp.name)
+  #      with open(filename, 'w+') as new:
+   #         with open(temp.name, 'r+') as old:
+    #            new.write(result + "\n")
+     #           for line in old.readlines():
+      #              new.write(line)
 
 # Build a dictionary of lists to derivate the type from columns.
 def getCSV(filename):
@@ -66,8 +75,7 @@ def body(DBName, delimiter, colNames):
     for entry, i in zip(all_columns, range(len(all_columns))):
         if i == 0:  # ignore key
             continue
-        scala_SHC_catalog += "                  \"" + colNames[i - 1] + "\":{\"cf\":\"" + colNames[
-            i - 1] + "\", \"col\": \"" + colNames[i - 1] + "\"" + \
+        scala_SHC_catalog += "                  \"" + colNames[i - 1] + "\":{\"cf\":\"" + DBName[DBName.rfind("/") + 1:]  + "\", \"col\": \"" + colNames[i - 1] + "\"" + \
                              ", \"type\":\"\"\"\" + dfTypes.getOrElse(\"" + colNames[
                                  i - 1] + "\", \"string\") + \"\"\"\"},\n"
     scala_SHC_catalog = scala_SHC_catalog[:-1][:-1] + "\n"

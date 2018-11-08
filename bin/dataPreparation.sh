@@ -40,7 +40,7 @@ function refactorData {
 
 		file_noext=$(basename $filename .dat)
 
-		fieldNames=$(cat ${TPCDS_ROOT_DIR}/work/create_tables.sql | pcregrep -Mo "(?<=create table "$file_noext")[\s\S]+?\)" | awk 'length($1) > 3 {print $1}')
+		fieldNames=$(cat ${TPCDS_ROOT_DIR}/work/create_tables.sql | pcregrep -Mo "(?<=create table "$file_noext"_t)[\s\S]+?\)" | tail -n +3 | head -n -1 | awk 'length($1) > 3 {print $1}')
 
 		echo "Processing dataset: "$file_noext
    		Tables+=$file_noext" "
@@ -305,7 +305,7 @@ EOF
     "1")  create_scala_hbaseData ;;
     "2")  load_data_hbase ;;
     "3")  runQueries ;;
-    "4")  clearALL ;;
+    "4")  exit ;;#clearALL ;;
     "Q")  exit                      ;;
     "q")  exit                      ;;
      * )  echo "invalid option"     ;;
