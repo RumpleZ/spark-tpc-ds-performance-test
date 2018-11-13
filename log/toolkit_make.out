@@ -1,0 +1,467 @@
+rm -f dsdgen dsqgen distcomp mkheader checksum s_brand.o s_customer_address.o s_call_center.o s_catalog.o s_catalog_order.o s_catalog_order_lineitem.o s_catalog_page.o s_catalog_promotional_item.o s_catalog_returns.o s_category.o s_class.o s_company.o s_customer.o s_division.o s_inventory.o s_item.o s_manager.o s_manufacturer.o s_market.o s_pline.o s_product.o s_promotion.o s_purchase.o s_reason.o s_store.o s_store_promotional_item.o s_store_returns.o s_subcategory.o s_subclass.o s_warehouse.o s_web_order.o s_web_order_lineitem.o s_web_page.o s_web_promotinal_item.o s_web_returns.o s_web_site.o s_zip_to_gmt.o w_call_center.o w_catalog_page.o w_catalog_returns.o w_catalog_sales.o w_customer_address.o w_customer.o w_customer_demographics.o w_datetbl.o w_household_demographics.o w_income_band.o w_inventory.o w_item.o w_promotion.o w_reason.o w_ship_mode.o w_store.o w_store_returns.o w_store_sales.o w_timetbl.o w_warehouse.o w_web_page.o w_web_returns.o w_web_sales.o w_web_site.o dbgen_version.o address.o build_support.o date.o decimal.o dist.o driver.o error_msg.o genrand.o join.o list.o load.o misc.o nulls.o parallel.o permute.o pricing.o print.o r_params.o StringBuffer.o tdef_functions.o tdefs.o text.o scd.o scaling.o release.o sparse.o validate.o address.o date.o decimal.o dist.o error_msg.o expr.o eval.o genrand.o grammar_support.o keywords.o list.o nulls.o permute.o print.o QgenMain.o query_handler.o r_params.o scaling.o StringBuffer.o substitution.o tdefs.o text.o tokenizer.o w_inventory.o y.tab.o release.o scd.o build_support.o parallel.o  dcgram.o dcomp.o grammar.o error_msg.o StringBuffer.o r_params.o  mkheader.o checksum.o tags *.idx columns.h streams.h tables.h y.tab.h y.tab.c tokenizer.c y.output .ctags_updated tpcds.idx.h tpcds.idx 
+ctags address.c build_support.c date.c decimal.c dist.c driver.c error_msg.c expr.c genrand.c grammar_support.c join.c list.c load.c misc.c nulls.c parallel.c permute.c pricing.c print.c r_params.c StringBuffer.c tdef_functions.c tdefs.c text.c scd.c scaling.c release.c scd.c sparse.c porting.c validate.c dcgram.c dcomp.c grammar.c  s_brand.c s_customer_address.c scaling.c s_call_center.c s_catalog.c s_catalog_order.c s_catalog_order_lineitem.c s_catalog_page.c s_catalog_promotional_item.c s_catalog_returns.c s_category.c s_class.c s_company.c s_customer.c s_division.c s_inventory.c s_item.c s_manager.c s_manufacturer.c s_market.c s_pline.c s_product.c s_promotion.c s_purchase.c s_reason.c s_store.c s_store_promotional_item.c s_store_returns.c s_subcategory.c s_subclass.c s_warehouse.c s_web_order.c s_web_order_lineitem.c s_web_page.c s_web_promotinal_item.c s_web_returns.c s_web_site.c s_zip_to_gmt.c w_call_center.c w_catalog_page.c w_catalog_returns.c w_catalog_sales.c w_customer_address.c w_customer.c w_customer_demographics.c w_datetbl.c w_household_demographics.c w_income_band.c w_inventory.c w_item.c w_promotion.c w_reason.c w_ship_mode.c w_store.c w_store_returns.c w_store_sales.c w_timetbl.c w_warehouse.c w_web_page.c w_web_returns.c w_web_sales.c w_web_site.c dbgen_version.c tokenizer.l substitution.c QgenMain.c qgen.y query_handler.c eval.c keywords.c mkheader.c checksum.c 2> /dev/null
+makefile:255: recipe for target '.ctags_updated' failed
+make: [.ctags_updated] Error 127 (ignored)
+date > .ctags_updated
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o mkheader.o mkheader.c
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall  -o mkheader mkheader.o -lm
+./mkheader column_list.txt
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o s_brand.o s_brand.c
+s_brand.c: In function ‘ld_s_brand’:
+s_brand.c:142:22: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct S_BRAND_TBL *r;
+                      ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o s_customer_address.o s_customer_address.c
+s_customer_address.c: In function ‘ld_s_customer_address’:
+s_customer_address.c:115:33: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct W_CUSTOMER_ADDRESS_TBL *r;
+                                 ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o s_call_center.o s_call_center.c
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o s_catalog.o s_catalog.c
+s_catalog.c: In function ‘ld_s_catalog’:
+s_catalog.c:147:24: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct S_CATALOG_TBL *r;
+                        ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o s_catalog_order.o s_catalog_order.c
+s_catalog_order.c: In function ‘ld_s_catalog_order’:
+s_catalog_order.c:200:30: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct S_CATALOG_ORDER_TBL *r;
+                              ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o s_catalog_order_lineitem.o s_catalog_order_lineitem.c
+s_catalog_order_lineitem.c: In function ‘ld_s_catalog_order_lineitem’:
+s_catalog_order_lineitem.c:188:39: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct S_CATALOG_ORDER_LINEITEM_TBL *r;
+                                       ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o s_catalog_page.o s_catalog_page.c
+s_catalog_page.c: In function ‘ld_s_catalog_page’:
+s_catalog_page.c:117:27: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct CATALOG_PAGE_TBL *r;
+                           ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o s_catalog_promotional_item.o s_catalog_promotional_item.c
+s_catalog_promotional_item.c: In function ‘ld_s_catalog_promotional_item’:
+s_catalog_promotional_item.c:137:41: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct S_CATALOG_PROMOTIONAL_ITEM_TBL *r;
+                                         ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o s_catalog_returns.o s_catalog_returns.c
+s_catalog_returns.c: In function ‘ld_s_catalog_returns’:
+s_catalog_returns.c:174:32: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct S_CATALOG_RETURNS_TBL *r;
+                                ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o s_category.o s_category.c
+s_category.c: In function ‘ld_s_category’:
+s_category.c:137:25: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct S_CATEGORY_TBL *r;
+                         ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o s_class.o s_class.c
+s_class.c: In function ‘ld_s_class’:
+s_class.c:140:22: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct S_CLASS_TBL *r;
+                      ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o s_company.o s_company.c
+s_company.c: In function ‘ld_s_company’:
+s_company.c:136:24: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct S_COMPANY_TBL *r;
+                        ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o s_customer.o s_customer.c
+s_customer.c: In function ‘ld_s_customer’:
+s_customer.c:272:26: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+   struct S_CUSTOMER_TBL *r;
+                          ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o s_division.o s_division.c
+s_division.c: In function ‘ld_s_division’:
+s_division.c:138:25: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct S_DIVISION_TBL *r;
+                         ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o s_inventory.o s_inventory.c
+s_inventory.c: In function ‘ld_s_inventory’:
+s_inventory.c:158:26: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct S_INVENTORY_TBL *r;
+                          ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o s_item.o s_item.c
+s_item.c: In function ‘ld_s_item’:
+s_item.c:148:21: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct W_ITEM_TBL *r;
+                     ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o s_manager.o s_manager.c
+s_manager.c: In function ‘ld_s_manager’:
+s_manager.c:140:24: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct S_MANAGER_TBL *r;
+                        ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o s_manufacturer.o s_manufacturer.c
+s_manufacturer.c: In function ‘ld_s_manufacturer’:
+s_manufacturer.c:136:29: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct S_MANUFACTURER_TBL *r;
+                             ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o s_market.o s_market.c
+s_market.c: In function ‘ld_s_market’:
+s_market.c:141:23: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct S_MARKET_TBL *r;
+                       ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o s_pline.o s_pline.c
+s_pline.c: In function ‘ld_s_pline’:
+s_pline.c:177:34: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct S_PURCHASE_LINEITEM_TBL *r;
+                                  ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o s_product.o s_product.c
+s_product.c: In function ‘ld_s_product’:
+s_product.c:141:24: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct S_PRODUCT_TBL *r;
+                        ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o s_promotion.o s_promotion.c
+s_promotion.c: In function ‘ld_s_promotion’:
+s_promotion.c:157:26: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct W_PROMOTION_TBL *r;
+                          ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o s_purchase.o s_purchase.c
+s_purchase.c: In function ‘ld_s_purchase’:
+s_purchase.c:194:25: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct S_PURCHASE_TBL *r;
+                         ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o s_reason.o s_reason.c
+s_reason.c: In function ‘ld_s_reason’:
+s_reason.c:137:23: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct S_REASON_TBL *r;
+                       ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o s_store.o s_store.c
+s_store.c: In function ‘ld_s_store’:
+s_store.c:146:22: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct W_STORE_TBL *r;
+                      ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o s_store_promotional_item.o s_store_promotional_item.c
+s_store_promotional_item.c: In function ‘ld_s_store_promotional_item’:
+s_store_promotional_item.c:138:39: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct S_STORE_PROMOTIONAL_ITEM_TBL *r;
+                                       ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o s_store_returns.o s_store_returns.c
+s_store_returns.c: In function ‘ld_s_store_returns’:
+s_store_returns.c:167:30: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct S_STORE_RETURNS_TBL *r;
+                              ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o s_subcategory.o s_subcategory.c
+s_subcategory.c: In function ‘ld_s_subcategory’:
+s_subcategory.c:141:28: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct S_SUBCATEGORY_TBL *r;
+                            ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o s_subclass.o s_subclass.c
+s_subclass.c: In function ‘ld_s_subclass’:
+s_subclass.c:141:25: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct S_SUBCLASS_TBL *r;
+                         ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o s_warehouse.o s_warehouse.c
+s_warehouse.c: In function ‘ld_s_warehouse’:
+s_warehouse.c:136:26: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct W_WAREHOUSE_TBL *r;
+                          ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o s_web_order.o s_web_order.c
+s_web_order.c: In function ‘ld_s_web_order’:
+s_web_order.c:206:26: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct S_WEB_ORDER_TBL *r;
+                          ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o s_web_order_lineitem.o s_web_order_lineitem.c
+s_web_order_lineitem.c: In function ‘ld_s_web_order_lineitem’:
+s_web_order_lineitem.c:185:35: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct S_WEB_ORDER_LINEITEM_TBL *r;
+                                   ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o s_web_page.o s_web_page.c
+s_web_page.c: In function ‘ld_s_web_page’:
+s_web_page.c:146:25: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct W_WEB_PAGE_TBL *r;
+                         ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o s_web_promotinal_item.o s_web_promotinal_item.c
+s_web_promotinal_item.c: In function ‘ld_s_web_promotional_item’:
+s_web_promotinal_item.c:140:37: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct S_WEB_PROMOTIONAL_ITEM_TBL *r;
+                                     ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o s_web_returns.o s_web_returns.c
+s_web_returns.c: In function ‘ld_s_web_return’:
+s_web_returns.c:179:28: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct S_WEB_RETURNS_TBL *r;
+                            ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o s_web_site.o s_web_site.c
+s_web_site.c: In function ‘ld_s_web_site’:
+s_web_site.c:142:25: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct W_WEB_SITE_TBL *r;
+                         ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o s_zip_to_gmt.o s_zip_to_gmt.c
+s_zip_to_gmt.c: In function ‘mk_s_zip’:
+s_zip_to_gmt.c:152:20: warning: format ‘%lld’ expects argument of type ‘long long int’, but argument 3 has type ‘ds_key_t {aka long int}’ [-Wformat=]
+  sprintf(r->szZip, "%05lld", kIndex);
+                    ^
+s_zip_to_gmt.c: In function ‘ld_s_zip’:
+s_zip_to_gmt.c:207:24: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct S_ZIP_GMT_TBL *r;
+                        ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o w_call_center.o w_call_center.c
+w_call_center.c: In function ‘mk_w_call_center’:
+w_call_center.c:88:3: warning: variable ‘nDaysPerRevision’ set but not used [-Wunused-but-set-variable]
+   nDaysPerRevision;
+   ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o w_catalog_page.o w_catalog_page.c
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o w_catalog_returns.o w_catalog_returns.c
+w_catalog_returns.c: In function ‘ld_w_catalog_returns’:
+w_catalog_returns.c:242:32: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct W_CATALOG_RETURNS_TBL *r;
+                                ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o w_catalog_sales.o w_catalog_sales.c
+w_catalog_sales.c: In function ‘mk_detail’:
+w_catalog_sales.c:167:18: warning: variable ‘jDate’ set but not used [-Wunused-but-set-variable]
+  static ds_key_t jDate;
+                  ^
+w_catalog_sales.c: In function ‘ld_w_catalog_sales’:
+w_catalog_sales.c:358:30: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct W_CATALOG_SALES_TBL *r;
+                              ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o w_customer_address.o w_customer_address.c
+w_customer_address.c: In function ‘ld_w_customer_address’:
+w_customer_address.c:148:33: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct W_CUSTOMER_ADDRESS_TBL *r;
+                                 ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o w_customer.o w_customer.c
+w_customer.c: In function ‘mk_w_customer’:
+w_customer.c:72:13: warning: variable ‘nBaseDate’ set but not used [-Wunused-but-set-variable]
+  static int nBaseDate;
+             ^
+w_customer.c: In function ‘ld_w_customer’:
+w_customer.c:208:25: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct W_CUSTOMER_TBL *r;
+                         ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o w_customer_demographics.o w_customer_demographics.c
+w_customer_demographics.c: In function ‘ld_w_customer_demographics’:
+w_customer_demographics.c:147:38: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct W_CUSTOMER_DEMOGRAPHICS_TBL *r;
+                                      ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o w_datetbl.o w_datetbl.c
+w_datetbl.c: In function ‘ld_w_date’:
+w_datetbl.c:226:21: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct W_DATE_TBL *r;
+                     ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o w_household_demographics.o w_household_demographics.c
+w_household_demographics.c: In function ‘ld_w_household_demographics’:
+w_household_demographics.c:144:39: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct W_HOUSEHOLD_DEMOGRAPHICS_TBL *r;
+                                       ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o w_income_band.o w_income_band.c
+w_income_band.c: In function ‘ld_w_income_band’:
+w_income_band.c:130:28: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct W_INCOME_BAND_TBL *r;
+                            ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o w_inventory.o w_inventory.c
+w_inventory.c: In function ‘ld_w_inventory’:
+w_inventory.c:169:26: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct W_INVENTORY_TBL *r;
+                          ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o w_item.o w_item.c
+w_item.c: In function ‘ld_w_item’:
+w_item.c:294:21: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct W_ITEM_TBL *r;
+                     ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o w_promotion.o w_promotion.c
+w_promotion.c: In function ‘mk_w_promotion’:
+w_promotion.c:76:11: warning: variable ‘nTemp’ set but not used [-Wunused-but-set-variable]
+  ds_key_t nTemp;
+           ^
+w_promotion.c: In function ‘ld_w_promotion’:
+w_promotion.c:206:26: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct W_PROMOTION_TBL *r;
+                          ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o w_reason.o w_reason.c
+w_reason.c: In function ‘ld_w_reason’:
+w_reason.c:132:23: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct W_REASON_TBL *r;
+                       ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o w_ship_mode.o w_ship_mode.c
+w_ship_mode.c: In function ‘ld_w_ship_mode’:
+w_ship_mode.c:150:26: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct W_SHIP_MODE_TBL *r;
+                          ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o w_store.o w_store.c
+w_store.c: In function ‘ld_w_store’:
+w_store.c:301:22: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct W_STORE_TBL *r;
+                      ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o w_store_returns.o w_store_returns.c
+w_store_returns.c: In function ‘ld_w_store_returns’:
+w_store_returns.c:196:30: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct W_STORE_RETURNS_TBL *r;
+                              ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o w_store_sales.o w_store_sales.c
+w_store_sales.c: In function ‘mk_master’:
+w_store_sales.c:75:3: warning: variable ‘nMaxItemCount’ set but not used [-Wunused-but-set-variable]
+   nMaxItemCount;
+   ^
+w_store_sales.c: In function ‘ld_w_store_sales’:
+w_store_sales.c:226:28: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct W_STORE_SALES_TBL *r;
+                            ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o w_timetbl.o w_timetbl.c
+w_timetbl.c: In function ‘ld_w_time’:
+w_timetbl.c:147:21: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct W_TIME_TBL *r;
+                     ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o w_warehouse.o w_warehouse.c
+w_warehouse.c: In function ‘ld_w_warehouse’:
+w_warehouse.c:157:26: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct W_WAREHOUSE_TBL *r;
+                          ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o w_web_page.o w_web_page.c
+w_web_page.c: In function ‘mk_w_web_page’:
+w_web_page.c:86:3: warning: variable ‘nRevisions’ set but not used [-Wunused-but-set-variable]
+   nRevisions;
+   ^
+w_web_page.c: In function ‘ld_w_web_page’:
+w_web_page.c:241:25: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct W_WEB_PAGE_TBL *r;
+                         ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o w_web_returns.o w_web_returns.c
+w_web_returns.c: In function ‘ld_w_web_returns’:
+w_web_returns.c:217:28: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct W_WEB_RETURNS_TBL *r;
+                            ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o w_web_sales.o w_web_sales.c
+w_web_sales.c: In function ‘ld_w_web_sales’:
+w_web_sales.c:315:26: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct W_WEB_SALES_TBL *r;
+                          ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o w_web_site.o w_web_site.c
+w_web_site.c: In function ‘mk_w_web_site’:
+w_web_site.c:82:17: warning: variable ‘dToday’ set but not used [-Wunused-but-set-variable]
+  static date_t *dToday;
+                 ^
+w_web_site.c: In function ‘ld_w_web_site’:
+w_web_site.c:266:25: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct W_WEB_SITE_TBL *r;
+                         ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o dbgen_version.o dbgen_version.c
+dbgen_version.c: In function ‘ld_dbgen_version’:
+dbgen_version.c:147:28: warning: variable ‘r’ set but not used [-Wunused-but-set-variable]
+  struct DBGEN_VERSION_TBL *r;
+                            ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o address.o address.c
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o build_support.o build_support.c
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o date.o date.c
+date.c: In function ‘getDateWeightFromJulian’:
+date.c:566:1: warning: type of ‘jDay’ defaults to ‘int’ [-Wimplicit-int]
+ getDateWeightFromJulian(jDay, nDistribution)
+ ^
+date.c:566:1: warning: type of ‘nDistribution’ defaults to ‘int’ [-Wimplicit-int]
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o decimal.o decimal.c
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o dist.o dist.c
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o dcgram.o dcgram.c
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o dcomp.o dcomp.c
+dcomp.c: In function ‘main’:
+dcomp.c:257:6: warning: variable ‘nArgs’ set but not used [-Wunused-but-set-variable]
+  int nArgs,
+      ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o grammar.o grammar.c
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o error_msg.o error_msg.c
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o StringBuffer.o StringBuffer.c
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o r_params.o r_params.c
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall  -o distcomp dcgram.o dcomp.o grammar.o error_msg.o StringBuffer.o r_params.o  -lm
+./distcomp -i tpcds.dst -o tpcds.idx
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o driver.o driver.c
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o genrand.o genrand.c
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o join.o join.c
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o list.o list.c
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o load.o load.c
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o misc.o misc.c
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o nulls.o nulls.c
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o parallel.o parallel.c
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o permute.o permute.c
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o pricing.o pricing.c
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o print.o print.c
+print.c: In function ‘print_delete’:
+print.c:204:5: warning: format not a string literal and no format arguments [-Wformat-security]
+     fprintf(fpDeleteFile, get_str("DELIMITER"));
+     ^
+In file included from print.c:36:0:
+print.c: In function ‘print_key’:
+config.h:114:21: warning: format ‘%lld’ expects argument of type ‘long long int’, but argument 3 has type ‘ds_key_t {aka long int}’ [-Wformat=]
+ #define HUGE_FORMAT "%lld"
+                     ^
+print.c:347:28: note: in expansion of macro ‘HUGE_FORMAT’
+    if (fprintf (fpOutfile, HUGE_FORMAT, val) < 0)
+                            ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o tdef_functions.o tdef_functions.c
+tdef_functions.c: In function ‘getTdefFunctionsByNumber’:
+tdef_functions.c:174:1: warning: type of ‘nTable’ defaults to ‘int’ [-Wimplicit-int]
+ getTdefFunctionsByNumber(nTable)
+ ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o tdefs.o tdefs.c
+tdefs.c: In function ‘getSimpleTdefsByNumber’:
+tdefs.c:150:1: warning: type of ‘nTable’ defaults to ‘int’ [-Wimplicit-int]
+ getSimpleTdefsByNumber(nTable)
+ ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o text.o text.c
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o scd.o scd.c
+scd.c: In function ‘scd_join’:
+scd.c:167:3: warning: variable ‘jH1DataDate’ set but not used [-Wunused-but-set-variable]
+   jH1DataDate,
+   ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o scaling.o scaling.c
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o release.o release.c
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o sparse.o sparse.c
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o validate.o validate.c
+validate.c: In function ‘validateGeneric’:
+validate.c:67:10: warning: variable ‘pChild’ set but not used [-Wunused-but-set-variable]
+    tdef *pChild;
+          ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall  -o dsdgen s_brand.o s_customer_address.o s_call_center.o s_catalog.o s_catalog_order.o s_catalog_order_lineitem.o s_catalog_page.o s_catalog_promotional_item.o s_catalog_returns.o s_category.o s_class.o s_company.o s_customer.o s_division.o s_inventory.o s_item.o s_manager.o s_manufacturer.o s_market.o s_pline.o s_product.o s_promotion.o s_purchase.o s_reason.o s_store.o s_store_promotional_item.o s_store_returns.o s_subcategory.o s_subclass.o s_warehouse.o s_web_order.o s_web_order_lineitem.o s_web_page.o s_web_promotinal_item.o s_web_returns.o s_web_site.o s_zip_to_gmt.o w_call_center.o w_catalog_page.o w_catalog_returns.o w_catalog_sales.o w_customer_address.o w_customer.o w_customer_demographics.o w_datetbl.o w_household_demographics.o w_income_band.o w_inventory.o w_item.o w_promotion.o w_reason.o w_ship_mode.o w_store.o w_store_returns.o w_store_sales.o w_timetbl.o w_warehouse.o w_web_page.o w_web_returns.o w_web_sales.o w_web_site.o dbgen_version.o address.o build_support.o date.o decimal.o dist.o driver.o error_msg.o genrand.o join.o list.o load.o misc.o nulls.o parallel.o permute.o pricing.o print.o r_params.o StringBuffer.o tdef_functions.o tdefs.o text.o scd.o scaling.o release.o sparse.o validate.o -lm
+yacc -d -v qgen.y
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o expr.o expr.c
+In file included from expr.c:36:0:
+expr.c: In function ‘PrintExpr’:
+config.h:114:21: warning: format ‘%lld’ expects argument of type ‘long long int’, but argument 2 has type ‘ds_key_t {aka long int}’ [-Wformat=]
+ #define HUGE_FORMAT "%lld"
+                     ^
+expr.c:442:12: note: in expansion of macro ‘HUGE_FORMAT’
+     printf(HUGE_FORMAT, pExpr->Value.nValue);
+            ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o eval.o eval.c
+In file included from eval.c:37:0:
+eval.c: In function ‘EvalArithmetic’:
+config.h:114:21: warning: format ‘%lld’ expects argument of type ‘long long int’, but argument 3 has type ‘ds_key_t {aka long int}’ [-Wformat=]
+ #define HUGE_FORMAT "%lld"
+                     ^
+eval.c:93:24: note: in expansion of macro ‘HUGE_FORMAT’
+     sprintf(szInteger, HUGE_FORMAT, pParams[0].nValue);
+                        ^
+config.h:114:21: warning: format ‘%lld’ expects argument of type ‘long long int’, but argument 3 has type ‘ds_key_t {aka long int}’ [-Wformat=]
+ #define HUGE_FORMAT "%lld"
+                     ^
+eval.c:100:24: note: in expansion of macro ‘HUGE_FORMAT’
+     sprintf(szInteger, HUGE_FORMAT, pParams[1].nValue);
+                        ^
+eval.c: In function ‘EvalRownCountExpr’:
+config.h:114:21: warning: format ‘%lld’ expects argument of type ‘long long int’, but argument 3 has type ‘ds_key_t {aka long int}’ [-Wformat=]
+ #define HUGE_FORMAT "%lld"
+                     ^
+eval.c:343:22: note: in expansion of macro ‘HUGE_FORMAT’
+       sprintf(szBuf, HUGE_FORMAT, get_rowcount(i));
+                      ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o grammar_support.o grammar_support.c
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o keywords.o keywords.c
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o QgenMain.o QgenMain.c
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o query_handler.o query_handler.c
+In file included from query_handler.c:36:0:
+query_handler.c: In function ‘GenerateQuery’:
+config.h:114:21: warning: format ‘%lld’ expects argument of type ‘long long int’, but argument 3 has type ‘ds_key_t {aka long int}’ [-Wformat=]
+ #define HUGE_FORMAT "%lld"
+                     ^
+query_handler.c:281:23: note: in expansion of macro ‘HUGE_FORMAT’
+     fprintf(pLogFile, HUGE_FORMAT, pSub->arValues[i].nValue);
+                       ^
+config.h:114:21: warning: format ‘%lld’ expects argument of type ‘long long int’, but argument 3 has type ‘ds_key_t {aka long int}’ [-Wformat=]
+ #define HUGE_FORMAT "%lld"
+                     ^
+query_handler.c:303:23: note: in expansion of macro ‘HUGE_FORMAT’
+     fprintf(pOutFile, HUGE_FORMAT, pValue->nValue);
+                       ^
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o substitution.o substitution.c
+lex  -t tokenizer.l > tokenizer.c
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o tokenizer.o tokenizer.c
+<stdout>:1381:17: warning: ‘yyunput’ defined but not used [-Wunused-function]
+<stdout>:1424:16: warning: ‘input’ defined but not used [-Wunused-function]
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o y.tab.o y.tab.c
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall  -o dsqgen address.o date.o decimal.o dist.o error_msg.o expr.o eval.o genrand.o grammar_support.o keywords.o list.o nulls.o permute.o print.o QgenMain.o query_handler.o r_params.o scaling.o StringBuffer.o substitution.o tdefs.o text.o tokenizer.o w_inventory.o y.tab.o release.o scd.o build_support.o parallel.o  -lm
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall   -c -o checksum.o checksum.c
+gcc -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG  -DLINUX -g -Wall  -o checksum checksum.o -lm

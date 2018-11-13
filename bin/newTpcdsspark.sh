@@ -302,9 +302,7 @@ function generate_queries {
 function run_tpcds_common {
   output_dir=$TPCDS_WORK_DIR
   cp ${TPCDS_GENQUERIES_DIR}/*.sql $TPCDS_WORK_DIR
-  echo "ENTREI NO RUN"
   ${TPCDS_ROOT_DIR}/bin/runqueries.sh $SPARK_HOME $TPCDS_WORK_DIR  > ${TPCDS_WORK_DIR}/runqueries.out 2>&1 &
-  echo "SAI DO RUN"
   script_pid=$!
   trap 'handle_shutdown $$ $output_dir; exit' SIGHUP SIGQUIT SIGINT SIGTERM
   cont=1
@@ -316,9 +314,8 @@ function run_tpcds_common {
     ps -p $script_pid > /dev/null 
     if [ $? == 1 ]; then
        error_code=1
-       echo "error code > 0"
     fi
-    if [ "$error_code" -gt 0 ] || [ "$progress" -ge $NUM_QUERIES ] ; then 
+    if [ "$error_code" -gt 0 ] || [ "$progress" -ge $NUM_QUERIES ] ; then
       cont=-1
     fi
     sleep 0.1
@@ -484,12 +481,11 @@ SETUP
  (2) Generate TPC-DS data with 1GB scale
  (3) Create spark tables
  (4) Generate TPC-DS queries
- (5) Use HBase module
 RUN
- (6) Run a subset of TPC-DS queries
- (7) Run All (99) TPC-DS Queries
+ (5) Run a subset of TPC-DS queries
+ (6) Run All (99) TPC-DS Queries
 CLEANUP
- (8) Cleanup toolkit
+ (7) Cleanup toolkit
  (Q) Quit
 ----------------------------------------------
 EOF
@@ -501,10 +497,9 @@ EOF
     "2")  gen_data $TPCDS_ROOT_DIR '1G' ;;
     "3")  create_spark_tables ;;
     "4")  generate_queries ;;
-    "5")  bash $TPCDS_ROOT_DIR/bin/dataPreparation.sh ;;
-    "6")  run_subset_tpcds_queries ;;
-    "7")  run_tpcds_queries ;;
-    "8")  cleanup_toolkit ;;
+    "5")  run_subset_tpcds_queries ;;
+    "6")  run_tpcds_queries ;;
+    "7")  cleanup_toolkit ;;
     "Q")  exit                      ;;
     "q")  exit                      ;;
      * )  echo "invalid option"     ;;

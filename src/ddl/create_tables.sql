@@ -10,9 +10,8 @@
 
 USE ${TPCDS_DBNAME};
 
-
-drop table if exists call_center;
-create table call_center
+drop table if exists call_center_text;
+create table call_center_text
 (
     cc_call_center_sk         int,
     cc_call_center_id         string,
@@ -47,11 +46,17 @@ create table call_center
     cc_tax_percentage         double
 )
 USING csv
-OPTIONS(header "false", delimiter "|", path "hdfs://cloud52:9000/home/hadoop/TPC-DS_Spark_HBase/validatedData/call_center.dat")
+OPTIONS(header "false", delimiter "|", path "hdfs://cloud64:9000/home/gsd/TPC-DS_Spark_HBase/gendata/call_center.csv")
 ;
+drop table if exists call_center;
+create table call_center
+using parquet
+as (select * from call_center_text)
+;
+drop table if exists call_center_text;
 
-drop table if exists catalog_page;
-create table catalog_page
+drop table if exists catalog_page_text;
+create table catalog_page_text
 (
     cp_catalog_page_sk        int,
     cp_catalog_page_id        string,
@@ -64,11 +69,17 @@ create table catalog_page
     cp_type                   string
 )
 USING csv
-OPTIONS(header "false", delimiter "|", path "hdfs://cloud52:9000/home/hadoop/TPC-DS_Spark_HBase/validatedData/catalog_page.dat")
+OPTIONS(header "false", delimiter "|", path "hdfs://cloud64:9000/home/gsd/TPC-DS_Spark_HBase/gendata/catalog_page.csv")
 ;
+drop table if exists catalog_page;
+create table catalog_page
+using parquet
+as (select * from catalog_page_text)
+;
+drop table if exists catalog_page_text;
 
-drop table if exists catalog_returns;
-create table catalog_returns
+drop table if exists catalog_returns_text;
+create table catalog_returns_text
 (
     cr_returned_date_sk       int,
     cr_returned_time_sk       int,
@@ -99,11 +110,18 @@ create table catalog_returns
     cr_net_loss               double
 )
 USING csv
-OPTIONS(header "false", delimiter "|", path "hdfs://cloud52:9000/home/hadoop/TPC-DS_Spark_HBase/validatedData/catalog_returns.dat")
+OPTIONS(header "false", delimiter "|", path "hdfs://cloud64:9000/home/gsd/TPC-DS_Spark_HBase/gendata/catalog_returns.csv")
 ;
+drop table if exists catalog_returns;
+create table catalog_returns
+using parquet
+as (select * from catalog_returns_text)
+;
+drop table if exists catalog_returns_text;
 
-drop table if exists catalog_sales;
-create table catalog_sales
+
+drop table if exists catalog_sales_text;
+create table catalog_sales_text
 (
     cs_sold_date_sk           int,
     cs_sold_time_sk           int,
@@ -141,11 +159,17 @@ create table catalog_sales
     cs_net_profit             double
 )
 USING csv
-OPTIONS(header "false", delimiter "|", path "hdfs://cloud52:9000/home/hadoop/TPC-DS_Spark_HBase/validatedData/catalog_sales.dat")
+OPTIONS(header "false", delimiter "|", path "hdfs://cloud64:9000/home/gsd/TPC-DS_Spark_HBase/gendata/catalog_sales.csv")
 ;
+drop table if exists catalog_sales;
+create table catalog_sales
+using parquet
+as (select * from catalog_sales_text)
+;
+drop table if exists catalog_sales_text;
 
-drop table if exists customer;
-create table customer
+drop table if exists customer_text;
+create table customer_text
 (
     c_customer_sk             int,
     c_customer_id             string,
@@ -167,11 +191,18 @@ create table customer
     c_last_review_date        string
 )
 USING csv
-OPTIONS(header "false", delimiter "|", path "hdfs://cloud52:9000/home/hadoop/TPC-DS_Spark_HBase/validatedData/customer.dat")
+OPTIONS(header "false", delimiter "|", path "hdfs://cloud64:9000/home/gsd/TPC-DS_Spark_HBase/gendata/customer.csv")
 ;
+drop table if exists customer;
+create table customer
+using parquet
+as (select * from customer_text)
+;
+drop table if exists customer_text;
 
-drop table if exists customer_address;
-create table customer_address
+
+drop table if exists customer_address_text;
+create table customer_address_text
 (
     ca_address_sk             int,
     ca_address_id             string,
@@ -188,11 +219,17 @@ create table customer_address
     ca_location_type          string
 )
 USING csv
-OPTIONS(header "false", delimiter "|", path "hdfs://cloud52:9000/home/hadoop/TPC-DS_Spark_HBase/validatedData/customer_address.dat")
+OPTIONS(header "false", delimiter "|", path "hdfs://cloud64:9000/home/gsd/TPC-DS_Spark_HBase/gendata/customer_address.csv")
 ;
+drop table if exists customer_address;
+create table customer_address
+using parquet
+as (select * from customer_address_text)
+;
+drop table if exists customer_address_text;
 
-drop table if exists customer_demographics;
-create table customer_demographics
+drop table if exists customer_demographics_text;
+create table customer_demographics_text
 (
     cd_demo_sk                int,
     cd_gender                 string,
@@ -205,11 +242,17 @@ create table customer_demographics
     cd_dep_college_count      int
 )
 USING csv
-OPTIONS(header "false", delimiter "|", path "hdfs://cloud52:9000/home/hadoop/TPC-DS_Spark_HBase/validatedData/customer_demographics.dat")
+OPTIONS(header "false", delimiter "|", path "hdfs://cloud64:9000/home/gsd/TPC-DS_Spark_HBase/gendata/customer_demographics.csv")
 ;
+drop table if exists customer_demographics;
+create table customer_demographics
+using parquet
+as (select * from customer_demographics_text)
+;
+drop table if exists customer_demographics_text;
 
-drop table if exists date_dim;
-create table date_dim
+drop table if exists date_dim_text;
+create table date_dim_text
 (
     d_date_sk                 int,
     d_date_id                 string,
@@ -241,11 +284,17 @@ create table date_dim
     d_current_year            string
 )
 USING csv
-OPTIONS(header "false", delimiter "|", path "hdfs://cloud52:9000/home/hadoop/TPC-DS_Spark_HBase/validatedData/date_dim.dat")
+OPTIONS(header "false", delimiter "|", path "hdfs://cloud64:9000/home/gsd/TPC-DS_Spark_HBase/gendata/date_dim.csv")
 ;
+drop table if exists date_dim;
+create table date_dim
+using parquet
+as (select * from date_dim_text)
+;
+drop table if exists date_dim_text;
 
-drop table if exists household_demographics;
-create table household_demographics
+drop table if exists household_demographics_text;
+create table household_demographics_text
 (
     hd_demo_sk                int,
     hd_income_band_sk         int,
@@ -254,22 +303,34 @@ create table household_demographics
     hd_vehicle_count          int
 )
 USING csv
-OPTIONS(header "false", delimiter "|", path "hdfs://cloud52:9000/home/hadoop/TPC-DS_Spark_HBase/validatedData/household_demographics.dat")
+OPTIONS(header "false", delimiter "|", path "hdfs://cloud64:9000/home/gsd/TPC-DS_Spark_HBase/gendata/household_demographics.csv")
 ;
+drop table if exists household_demographics;
+create table household_demographics
+using parquet
+as (select * from household_demographics_text)
+;
+drop table if exists household_demographics_text;
 
-drop table if exists income_band;
-create table income_band
+drop table if exists income_band_text;
+create table income_band_text
 (
     ib_income_band_sk         int,
     ib_lower_bound            int,
     ib_upper_bound            int
 )
 USING csv
-OPTIONS(header "false", delimiter "|", path "hdfs://cloud52:9000/home/hadoop/TPC-DS_Spark_HBase/validatedData/income_band.dat")
+OPTIONS(header "false", delimiter "|", path "hdfs://cloud64:9000/home/gsd/TPC-DS_Spark_HBase/gendata/income_band.csv")
 ;
+drop table if exists income_band;
+create table income_band 
+using parquet
+as (select * from income_band_text)
+;
+drop table if exists income_band_text;
 
-drop table if exists inventory;
-create table inventory
+drop table if exists inventory_text;
+create table inventory_text
 (
     inv_date_sk               int,
     inv_item_sk               int,
@@ -277,11 +338,17 @@ create table inventory
     inv_quantity_on_hand      bigint
 )
 USING csv
-OPTIONS(header "false", delimiter "|", path "hdfs://cloud52:9000/home/hadoop/TPC-DS_Spark_HBase/validatedData/inventory.dat")
+OPTIONS(header "false", delimiter "|", path "hdfs://cloud64:9000/home/gsd/TPC-DS_Spark_HBase/gendata/inventory.csv")
 ;
+drop table if exists inventory;
+create table inventory 
+using parquet
+as (select * from inventory_text)
+;
+drop table if exists inventory_text;
 
-drop table if exists item;
-create table item
+drop table if exists item_text;
+create table item_text
 (
     i_item_sk                 int,
     i_item_id                 string,
@@ -307,11 +374,17 @@ create table item
     i_product_name            string
 )
 USING csv
-OPTIONS(header "false", delimiter "|", path "hdfs://cloud52:9000/home/hadoop/TPC-DS_Spark_HBase/validatedData/item.dat")
+OPTIONS(header "false", delimiter "|", path "hdfs://cloud64:9000/home/gsd/TPC-DS_Spark_HBase/gendata/item.csv")
 ;
+drop table if exists item;
+create table item
+using parquet
+as (select * from item_text)
+;
+drop table if exists item_text;
 
-drop table if exists promotion;
-create table promotion
+drop table if exists promotion_text;
+create table promotion_text
 (
     p_promo_sk                int,
     p_promo_id                string,
@@ -334,22 +407,34 @@ create table promotion
     p_discount_active         string
 )
 USING csv
-OPTIONS(header "false", delimiter "|", path "hdfs://cloud52:9000/home/hadoop/TPC-DS_Spark_HBase/validatedData/promotion.dat")
+OPTIONS(header "false", delimiter "|", path "hdfs://cloud64:9000/home/gsd/TPC-DS_Spark_HBase/gendata/promotion.csv")
 ;
+drop table if exists promotion;
+create table promotion
+using parquet
+as (select * from promotion_text)
+;
+drop table if exists promotion_text;
 
-drop table if exists reason;
-create table reason
+drop table if exists reason_text;
+create table reason_text
 (
     r_reason_sk               int,
     r_reason_id               string,
     r_reason_desc             string
 )
 USING csv
-OPTIONS(header "false", delimiter "|", path "hdfs://cloud52:9000/home/hadoop/TPC-DS_Spark_HBase/validatedData/reason.dat")
+OPTIONS(header "false", delimiter "|", path "hdfs://cloud64:9000/home/gsd/TPC-DS_Spark_HBase/gendata/reason.csv")
 ;
+drop table if exists reason;
+create table reason 
+using parquet
+as (select * from reason_text)
+;
+drop table if exists reason_text;
 
-drop table if exists ship_mode;
-create table ship_mode
+drop table if exists ship_mode_text;
+create table ship_mode_text
 (
     sm_ship_mode_sk           int,
     sm_ship_mode_id           string,
@@ -359,11 +444,17 @@ create table ship_mode
     sm_contract               string
 )
 USING csv
-OPTIONS(header "false", delimiter "|", path "hdfs://cloud52:9000/home/hadoop/TPC-DS_Spark_HBase/validatedData/ship_mode.dat")
+OPTIONS(header "false", delimiter "|", path "hdfs://cloud64:9000/home/gsd/TPC-DS_Spark_HBase/gendata/ship_mode.csv")
 ;
+drop table if exists ship_mode;
+create table ship_mode
+using parquet
+as (select * from ship_mode_text)
+;
+drop table if exists ship_mode_text;
 
-drop table if exists store;
-create table store
+drop table if exists store_text;
+create table store_text
 (
     s_store_sk                int,
     s_store_id                string,
@@ -396,11 +487,17 @@ create table store
     s_tax_precentage          double
 )
 USING csv
-OPTIONS(header "false", delimiter "|", path "hdfs://cloud52:9000/home/hadoop/TPC-DS_Spark_HBase/validatedData/store.dat")
+OPTIONS(header "false", delimiter "|", path "hdfs://cloud64:9000/home/gsd/TPC-DS_Spark_HBase/gendata/store.csv")
 ;
+drop table if exists store;
+create table store 
+using parquet
+as (select * from store_text)
+;
+drop table if exists store_text;
 
-drop table if exists store_returns;
-create table store_returns
+drop table if exists store_returns_text;
+create table store_returns_text
 (
     sr_returned_date_sk       int,
     sr_return_time_sk         int,
@@ -424,11 +521,17 @@ create table store_returns
     sr_net_loss               double
 )
 USING csv
-OPTIONS(header "false", delimiter "|", path "hdfs://cloud52:9000/home/hadoop/TPC-DS_Spark_HBase/validatedData/store_returns.dat")
+OPTIONS(header "false", delimiter "|", path "hdfs://cloud64:9000/home/gsd/TPC-DS_Spark_HBase/gendata/store_returns.csv")
 ;
+drop table if exists store_returns;
+create table store_returns 
+using parquet
+as (select * from store_returns_text)
+;
+drop table if exists store_returns_text;
 
-drop table if exists store_sales;
-create table store_sales
+drop table if exists store_sales_text;
+create table store_sales_text
 (
     ss_sold_date_sk           int,
     ss_sold_time_sk           int,
@@ -455,11 +558,17 @@ create table store_sales
     ss_net_profit             double
 )
 USING csv
-OPTIONS(header "false", delimiter "|", path "hdfs://cloud52:9000/home/hadoop/TPC-DS_Spark_HBase/validatedData/store_sales.dat")
+OPTIONS(header "false", delimiter "|", path "hdfs://cloud64:9000/home/gsd/TPC-DS_Spark_HBase/gendata/store_sales.csv")
 ;
+drop table if exists store_sales;
+create table store_sales
+using parquet
+as (select * from store_sales_text)
+;
+drop table if exists store_sales_text;
 
-drop table if exists time_dim;
-create table time_dim
+drop table if exists time_dim_text;
+create table time_dim_text
 (
     t_time_sk                 int,
     t_time_id                 string,
@@ -473,11 +582,17 @@ create table time_dim
     t_meal_time               string
 )
 USING csv
-OPTIONS(header "false", delimiter "|", path "hdfs://cloud52:9000/home/hadoop/TPC-DS_Spark_HBase/validatedData/time_dim.dat")
+OPTIONS(header "false", delimiter "|", path "hdfs://cloud64:9000/home/gsd/TPC-DS_Spark_HBase/gendata/time_dim.csv")
 ;
+drop table if exists time_dim;
+create table time_dim
+using parquet
+as (select * from time_dim_text)
+;
+drop table if exists time_dim_text;
 
-drop table if exists warehouse;
-create table warehouse
+drop table if exists warehouse_text;
+create table warehouse_text
 (
     w_warehouse_sk            int,
     w_warehouse_id            string,
@@ -495,10 +610,17 @@ create table warehouse
     w_gmt_offset              double
 )
 USING csv
-OPTIONS(header "false", delimiter "|", path "hdfs://cloud52:9000/home/hadoop/TPC-DS_Spark_HBase/validatedData/warehouse.dat")
+OPTIONS(header "false", delimiter "|", path "hdfs://cloud64:9000/home/gsd/TPC-DS_Spark_HBase/gendata/warehouse.csv")
 ;
-drop table if exists web_page;
-create table web_page
+drop table if exists warehouse;
+create table warehouse
+using parquet
+as (select * from warehouse_text)
+;
+drop table if exists warehouse_text;
+
+drop table if exists web_page_text;
+create table web_page_text
 (
     wp_web_page_sk            int,
     wp_web_page_id            string,
@@ -516,11 +638,17 @@ create table web_page
     wp_max_ad_count           int
 )
 USING csv
-OPTIONS(header "false", delimiter "|", path "hdfs://cloud52:9000/home/hadoop/TPC-DS_Spark_HBase/validatedData/web_page.dat")
+OPTIONS(header "false", delimiter "|", path "hdfs://cloud64:9000/home/gsd/TPC-DS_Spark_HBase/gendata/web_page.csv")
 ;
+drop table if exists web_page;
+create table web_page 
+using parquet
+as (select * from web_page_text)
+;
+drop table if exists web_page_text;
 
-drop table if exists web_returns;
-create table web_returns
+drop table if exists web_returns_text;
+create table web_returns_text
 (
     wr_returned_date_sk       int,
     wr_returned_time_sk       int,
@@ -548,11 +676,17 @@ create table web_returns
     wr_net_loss               double
 )
 USING csv
-OPTIONS(header "false", delimiter "|", path "hdfs://cloud52:9000/home/hadoop/TPC-DS_Spark_HBase/validatedData/web_returns.dat")
+OPTIONS(header "false", delimiter "|", path "hdfs://cloud64:9000/home/gsd/TPC-DS_Spark_HBase/gendata/web_returns.csv")
 ;
+drop table if exists web_returns;
+create table web_returns
+using parquet
+as (select * from web_returns_text)
+;
+drop table if exists web_returns_text;
 
-drop table if exists web_sales;
-create table web_sales
+drop table if exists web_sales_text;
+create table web_sales_text
 (
     ws_sold_date_sk           int,
     ws_sold_time_sk           int,
@@ -590,11 +724,17 @@ create table web_sales
     ws_net_profit             double
 )
 USING csv
-OPTIONS(header "false", delimiter "|", path "hdfs://cloud52:9000/home/hadoop/TPC-DS_Spark_HBase/validatedData/web_sales.dat")
+OPTIONS(header "false", delimiter "|", path "hdfs://cloud64:9000/home/gsd/TPC-DS_Spark_HBase/gendata/web_sales.csv")
 ;
+drop table if exists web_sales;
+create table web_sales
+using parquet
+as (select * from web_sales_text)
+;
+drop table if exists web_sales_text;
 
-drop table if exists web_site;
-create table web_site
+drop table if exists web_site_text;
+create table web_site_text
 (
     web_site_sk               int,
     web_site_id               string,
@@ -624,5 +764,11 @@ create table web_site
     web_tax_percentage        double
 )
 USING csv
-OPTIONS(header "false", delimiter "|", path "hdfs://cloud52:9000/home/hadoop/TPC-DS_Spark_HBase/validatedData/web_site.dat")
+OPTIONS(header "false", delimiter "|", path "hdfs://cloud64:9000/home/gsd/TPC-DS_Spark_HBase/gendata/web_site.csv")
 ;
+drop table if exists web_site;
+create table web_site
+using parquet
+as (select * from web_site_text)
+;
+drop table if exists web_site_text;
